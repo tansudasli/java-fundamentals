@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.core.oop.EmployeeHelperTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2018-07-05T11:42:04" hostname="MAVERICK" time="0.105">
+  <properties/>
+  <testcase name="invalidStreet(String)[1]" classname="com.core.oop.EmployeeHelperTest" time="0.053"/>
+  <testcase name="invalidPostCode(String)[1]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="invalidPostCode(String)[2]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="invalidPostCode(String)[3]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="invalidPostCode(String)[4]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="validateStreet(String)[1]" classname="com.core.oop.EmployeeHelperTest" time="0.008"/>
+  <testcase name="validateStreet(String)[2]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="validateStreet(String)[3]" classname="com.core.oop.EmployeeHelperTest" time="0.0"/>
+  <testcase name="validateStreet(String)[4]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="validateStreet(String)[5]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="validateStreet(String)[6]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="validatePostCode(String)[1]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <testcase name="validatePostCode(String)[2]" classname="com.core.oop.EmployeeHelperTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
