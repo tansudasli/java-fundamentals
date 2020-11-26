@@ -1,5 +1,7 @@
 .vs_code
 .idea
+gradle
+.gradle
 
 #
 .DS_Store
