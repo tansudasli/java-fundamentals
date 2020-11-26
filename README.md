@@ -1,1 +1,5 @@
-# java-fundamentals-oop
+# java-fundamentals
+
+- core
+- algorithms
+
