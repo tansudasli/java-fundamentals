@@ -11,6 +11,6 @@
 - to run,
     - Use IDE menu, chose class and right click,
     - or, `./gadlew jar` to build jar and 
-      run class from the jar like `java -cp /build/libs/java-fundamentals-1.0-SNAPSHOT.jar com.core.fp.Stats`
+      run class from the jar like `java -cp /build/libs/java-fundamentals-1.0-SNAPSHOT.jar com.core.fp.Basics`
     - or, `java src/main/java/com/core/fp/TestStream4.java`
 
