@@ -45,25 +45,17 @@ public class Basics {
         stream(v)                         //already IntStream. So, no need for IntStream.of(v)
                 .parallel()
                 .min()                    //switch to OptionalInt
-                .ifPresent((e) -> {       //System.out::println or,  .ifPresent((e) -> System.out.println("Min: " + e));
-                    System.out.println("Min: " + e);
-                });
-
+                .ifPresent(e -> System.out.println("Min: " + e));  //use pure functions,
+                                                                   //and, call functions instead of many lambda lines !!
 
         stream(v)
                 .parallel()
                 .reduce((x, y) -> x * y)    //Optional
-                .ifPresentOrElse((e) -> {
-                            System.out.println("Sum of: " + e);
-                        },
-                        () -> {             //Runnable,  separate thread
-                            System.out.println("error/..");
-                        });
+                .ifPresentOrElse(e -> System.out.println("Sum of: " + e),
+                                 () -> System.out.println("error/.."));   //Runnable,  separate thread
         stream(v)
                 .sorted()
-                .forEach(e -> {
-                    System.out.print(e + " ");
-                });
+                .forEach(e -> System.out.print(e + " "));
 
 //        stream(v)
 //                .sorted()
