@@ -57,6 +57,13 @@ public class Basics {
                 .sorted()
                 .forEach(e -> System.out.print(e + " "));
 
+        //or
+//        stream(v)
+//                .sorted()
+//                .mapToObj(String::valueOf)
+//                .reduce((carry, str) -> carry.concat(" " + str + " "))
+//                .ifPresent(System.out::print);
+
 //        stream(v)
 //                .sorted()
 //                .collect(Collectors.joining(" "));
