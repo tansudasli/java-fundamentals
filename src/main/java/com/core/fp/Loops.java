@@ -39,8 +39,14 @@ public class Loops {
 
     public static void main(String[] args) {
 
-        List<Long> data  = LongStream.rangeClosed(0, 100000000).boxed().collect(Collectors.toList());
-        LongStream data2 = data.stream().mapToLong(e -> e);
+        List<Long> data = LongStream
+                            .rangeClosed(0, 100000000)
+                            .boxed()
+                            .collect(Collectors.toList());
+
+        LongStream data2 = data
+                            .stream()
+                            .mapToLong(e -> e);
 
         /*
          * as computing steps increases or max number, streams perform better
