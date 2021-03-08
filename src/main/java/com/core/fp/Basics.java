@@ -21,7 +21,7 @@ public class Basics {
     public static void main(String[] args) {
         /*
          *  To understand stream well, we need to understand
-         * - stream() or Arrays.stream()
+         * - stream() or Arrays.stream() or vL.stream() if it is a Collection
          * - Optional or Optional.of() ....
          *
          * and their interactions !!
