@@ -23,6 +23,8 @@ public class Basics {
          *  To understand stream well, we need to understand
          * - stream() or Arrays.stream()
          * - Optional or Optional.of() ....
+         *
+         * and their interactions !!
          */
 
 //        stream(v).filter(e -> e > 5).forEach(System.out::print);
