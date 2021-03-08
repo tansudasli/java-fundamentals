@@ -36,9 +36,10 @@ public class Transformations {
         //to Map, in 2 ways !!
         //requires a unique set
         //0, 0 | 2, 2 | 4, 4 | 6, 6 | 8, 8 |
-        Map<Integer, Integer> mapOfEvens = uniqueSortedEvens.stream()
-                                                      .filter(e -> e % 2 == 0)
-                                                      .collect(Collectors.toMap(e -> e,    //k
+        Map<Integer, Integer>
+                mapOfEvens = uniqueSortedEvens.stream()
+                                              .filter(e -> e % 2 == 0)
+                                              .collect(Collectors.toMap(e -> e,    //k
                                                                                 e -> e));  //v
 
         mapOfEvens.forEach((k, v) -> System.out.print(k + ", " + v + " | "));
@@ -47,10 +48,10 @@ public class Transformations {
 
         //below creates a Map, but it also manages collusion, too !!
         //0, [0] | 2, [2, 2] | 4, [4, 4] | 6, [6] | 8, [8] |
-        Map<Integer, List<Integer>> mapOfEvens2 =
-                vL.stream()
-                        .filter(e -> e % 2 == 0)
-                        .collect(Collectors.groupingBy(e -> e));   //groupingBy returns a Map
+        Map<Integer, List<Integer>>
+                mapOfEvens2 = vL.stream()
+                                .filter(e -> e % 2 == 0)
+                                .collect(Collectors.groupingBy(e -> e));   //groupingBy returns a Map
 
         mapOfEvens2.forEach((k, v) -> System.out.print(k + ", " + v + " | "));
 
