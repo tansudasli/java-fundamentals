@@ -37,7 +37,7 @@ public class Transformations {
                                                       .collect(Collectors.toMap(e -> e,    //k
                                                                                 e -> e));  //v
         System.out.println("");
-        mapOfEvens.forEach((k, v) -> System.out.println(k + ", " + v));
+        mapOfEvens.forEach((k, v) -> System.out.print(k + ", " + v + " | "));
 
 
     }
