@@ -45,12 +45,14 @@ public class Transformations {
 
         System.out.println("");
 
-        //below creates a map, but it also manages collusion, too !!
+        //below creates a Map, but it also manages collusion, too !!
         //0, [0] | 2, [2, 2] | 4, [4, 4] | 6, [6] | 8, [8] |
-        vL.stream()
-                .filter(e -> e % 2 == 0)
-                .collect(Collectors.groupingBy(e -> e))                  //creates a Map !!
-                .forEach((k, v) -> System.out.print(k + ", " + v + " | "));
+        Map<Integer, List<Integer>> mapOfEvens2 =
+                vL.stream()
+                        .filter(e -> e % 2 == 0)
+                        .collect(Collectors.groupingBy(e -> e));   //groupingBy returns a Map
+
+        mapOfEvens2.forEach((k, v) -> System.out.print(k + ", " + v + " | "));
 
 
 
