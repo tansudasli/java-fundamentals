@@ -38,20 +38,26 @@ public class Basics {
         Arrays.stream(v)
                 .filter(greaterThanFIVE)
                 .max()                               //switching to Optional
-                .ifPresent((e) -> System.out.println("Max: " + e));
+                .ifPresent(max -> System.out.println("Max: " + max));
+
+        //combining Optional.of and stream results to print elegantly
+        OptionalInt.of(Arrays.stream(v)
+                            .filter(greaterThanFIVE)
+                            .sum())
+                   .ifPresent(total -> System.out.println("Sum: " + total));
 
 //        System.out.println("min: " + IntStream.of(v).min().isPresent());
         //below is better than,
         stream(v)                         //already IntStream. So, no need for IntStream.of(v)
                 .parallel()
                 .min()                    //switch to OptionalInt
-                .ifPresent(e -> System.out.println("Min: " + e));  //use pure functions,
+                .ifPresent(min -> System.out.println("Min: " + min));  //use pure functions,
                                                                    //and, call functions instead of many lambda lines !!
 
         stream(v)
                 .parallel()
                 .reduce((x, y) -> x * y)    //Optional
-                .ifPresentOrElse(e -> System.out.println("Sum of: " + e),
+                .ifPresentOrElse(productOf -> System.out.println("Sum of: " + productOf),
                                  () -> System.out.println("error/.."));   //Runnable,  separate thread
         stream(v)
                 .sorted()
