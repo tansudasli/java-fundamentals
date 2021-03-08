@@ -31,13 +31,27 @@ public class Transformations {
         System.out.println("");
         uniqueSortedEvens.forEach( e -> System.out.print(e + " "));
 
-        //to Map
+        System.out.println("");
+
+        //to Map, in 2 ways !!
+        //requires a unique set
+        //0, 0 | 2, 2 | 4, 4 | 6, 6 | 8, 8 |
         Map<Integer, Integer> mapOfEvens = uniqueSortedEvens.stream()
                                                       .filter(e -> e % 2 == 0)
                                                       .collect(Collectors.toMap(e -> e,    //k
                                                                                 e -> e));  //v
-        System.out.println("");
+
         mapOfEvens.forEach((k, v) -> System.out.print(k + ", " + v + " | "));
+
+        System.out.println("");
+
+        //below creates a map, but it also manages collusion, too !!
+        //0, [0] | 2, [2, 2] | 4, [4, 4] | 6, [6] | 8, [8] |
+        vL.stream()
+                .filter(e -> e % 2 == 0)
+                .collect(Collectors.groupingBy(e -> e))                  //creates a Map !!
+                .forEach((k, v) -> System.out.print(k + ", " + v + " | "));
+
 
 
     }
