@@ -14,25 +14,23 @@ public class StockServer {
 
         System.out.println("server started...");
 
-        symbols.forEach(symbol -> {
-                //create Observable
-                //emit - do something and put it
-                //subscribe - to read data
-            Observable.<Stock>create(emitter-> {
-                                System.out.println("created...");
 
-                                //emit the price
-                                emitter.onNext(fetch(symbol, 10.0));  //fetch from an API
+        //create Observable
+        //emit - do something and put it, till it finishes
+        //subscribe - to read data
+        Observable.<Stock>create(emitter-> {
+                            System.out.println("created...");
 
-//                                emitter.onError(new Throwable("error"));
+                            //emit the Stock
+                            symbols.forEach(symbol -> emitter
+                                   .onNext(fetch(symbol, 10.0)));
 
-                                emitter.onComplete();
 
-                          })
-                          .subscribe(stock -> System.out.println("got...: " + stock.toString()))
-                          .dispose(); //callbacks to the emitted data..
+                      })
+                      .subscribe(stock -> System.out.println("got...: " + stock.toString()))
+                      .dispose();
 
-        });
+
 
     }
 }
