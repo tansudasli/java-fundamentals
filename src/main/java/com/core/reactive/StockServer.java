@@ -23,8 +23,12 @@ public class StockServer {
 
                             //emit the Stock
                             symbols.forEach(symbol -> emitter.onNext(fetch(symbol, 10.0)));
+
+                            emitter.onComplete();  //send complete signal
                   })
-                  .subscribe(stock -> System.out.println("got...: " + stock.toString()))
+                  .subscribe(stock -> System.out.println("got...: " + stock.toString()), //onNext
+                             System.out::println,  //onError channel
+                             () -> {})             //onComplete channel
                   .dispose();
 
 
