@@ -22,13 +22,10 @@ public class StockServer {
                             System.out.println("created...");
 
                             //emit the Stock
-                            symbols.forEach(symbol -> emitter
-                                   .onNext(fetch(symbol, 10.0)));
-
-
-                      })
-                      .subscribe(stock -> System.out.println("got...: " + stock.toString()))
-                      .dispose();
+                            symbols.forEach(symbol -> emitter.onNext(fetch(symbol, 10.0)));
+                  })
+                  .subscribe(stock -> System.out.println("got...: " + stock.toString()))
+                  .dispose();
 
 
 
