@@ -1,9 +1,10 @@
 package com.core.reactive;
 
 public interface StockService {
-    static Stock fetch(String symbol, double price) {
+    static Stock fetch(String symbol) {
 
-        return new Stock(symbol, price);
+        //fetch via api
+        return new Stock(symbol, 50.0);
     }
 
 }
