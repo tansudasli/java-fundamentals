@@ -57,7 +57,8 @@ public class StockServer {
         //then, subscribe - to read data
         Observable.<Stock>create(emitter -> emitThings(emitter, symbols))
                   .subscribeOn(Schedulers.io())         //multi-thread capability
-//                  .onErrorResumeNext(throwable -> callBackup(symbols, throwable))
+//todo: go on errors                 .onErrorResumeNext(throwable -> callBackup(symbols, throwable))
+//todo: backpressure
                   .subscribe(StockServer::subscribeThings,                 //onNext
                              StockServer::handleError,  //onError channel
                              () -> System.out.println("DONE..."));         //onComplete channel
