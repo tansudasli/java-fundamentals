@@ -2,6 +2,8 @@ package com.core.reactive;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +34,7 @@ public class StockServer {
         System.out.println("got...: " + stock.toString() + " " + Thread.currentThread());
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         var symbols = Arrays.asList("GOOG", "AMZN", "TESLA");
 
@@ -41,11 +43,13 @@ public class StockServer {
         //create Observable<Stock), emit - do something,
         //then, subscribe - to read data
         Observable.<Stock>create(emitter -> emitThings(emitter, symbols))
+                  .subscribeOn(Schedulers.io())         //multi-thread capability
                   .subscribe(StockServer::subscribeThings,                 //onNext
                              err -> System.out.println("ERROR..." + err),  //onError channel
-                             () -> System.out.println("DONE..."))          //onComplete channel
-                  .dispose() ;  //unsubscribe
+                             () -> System.out.println("DONE..."));         //onComplete channel
 
+
+        Thread.sleep(10000);
     }
 
 }
