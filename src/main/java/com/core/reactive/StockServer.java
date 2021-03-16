@@ -1,8 +1,6 @@
 package com.core.reactive;
 
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.core.*;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import java.util.Arrays;
@@ -15,9 +13,12 @@ public class StockServer {
 
         //emit the Stock
         //symbols.forEach(symbol -> emitter.onNext(fetch(symbol)));
-        symbols.stream()
-               .map(StockService::fetch)
-               .forEach(emitter::onNext);
+        int counter = 0;
+        while (counter++ < 10) {
+            symbols.stream()
+                    .map(StockService::fetch)
+                    .forEach(emitter::onNext);
+        }
 
         emitter.onComplete();  //send complete signal
     }
@@ -34,6 +35,18 @@ public class StockServer {
         System.out.println("got...: " + stock.toString() + " " + Thread.currentThread());
     }
 
+
+    private static void handleError(Throwable err) {
+        System.out.println("ERROR..." + err);
+    }
+
+//    private static Observable<Stock> callBackup(List<String> symbols, Throwable throwable) {
+//        System.out.println(throwable);
+//
+//        return symbols.stream().map(StockService::fetch);
+//
+//    }
+
     public static void main(String[] args) throws InterruptedException {
 
         var symbols = Arrays.asList("GOOG", "AMZN", "TESLA");
@@ -44,12 +57,16 @@ public class StockServer {
         //then, subscribe - to read data
         Observable.<Stock>create(emitter -> emitThings(emitter, symbols))
                   .subscribeOn(Schedulers.io())         //multi-thread capability
+//                  .onErrorResumeNext(throwable -> callBackup(symbols, throwable))
                   .subscribe(StockServer::subscribeThings,                 //onNext
-                             err -> System.out.println("ERROR..." + err),  //onError channel
+                             StockServer::handleError,  //onError channel
                              () -> System.out.println("DONE..."));         //onComplete channel
 
 
         Thread.sleep(10000);
     }
+
+
+
 
 }
