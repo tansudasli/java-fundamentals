@@ -20,7 +20,7 @@ public class StockServer {
         emitter.onComplete();  //send complete signal
     }
 
-    private static void processThings(Stock stock) {
+    private static void subscribeThings(Stock stock) {
         //intercept and do some other staff, such as buy the stock
         if (stock.getPrice() < 35) {
             //unsubscribe, then buy, to do that we need to use anonymous new Observer<Stock>() { }
@@ -29,7 +29,7 @@ public class StockServer {
         }
 
         //do something
-        System.out.println("got...: " + stock.toString());
+        System.out.println("got...: " + stock.toString() + " " + Thread.currentThread());
     }
 
     public static void main(String[] args) {
@@ -41,10 +41,10 @@ public class StockServer {
         //create Observable<Stock), emit - do something,
         //then, subscribe - to read data
         Observable.<Stock>create(emitter -> emitThings(emitter, symbols))
-                  .subscribe(StockServer::processThings,                    //onNext
+                  .subscribe(StockServer::subscribeThings,                 //onNext
                              err -> System.out.println("ERROR..." + err),  //onError channel
                              () -> System.out.println("DONE..."))          //onComplete channel
-                  .dispose();  //unsubscribe
+                  .dispose() ;  //unsubscribe
 
     }
 
