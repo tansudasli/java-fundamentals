@@ -5,7 +5,7 @@ package com.core.generics;
  *
  * @param <T>
  */
-public class Data<T> {  //added <T> to define as generics !!
+public class Data<T> implements IData<T> {  //added <T> to define as generics !!
 
     private T data;
 
@@ -13,9 +13,12 @@ public class Data<T> {  //added <T> to define as generics !!
         this.data = data;
     }
 
+    @Override
     public T getData() {
         return data;
     }
+
+    @Override
     public void setData(T data) {
         this.data = data;
     }
@@ -34,6 +37,9 @@ public class Data<T> {  //added <T> to define as generics !!
 
         Data<String> s1 = new Data<>("Sirma");
         System.out.println(s1);
+
+        IData<String> i1 = new Data<>("via generic interface");
+        System.out.println(i1);
 
     }
 
