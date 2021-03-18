@@ -1,4 +1,4 @@
-package com.core.generic;
+package com.core.generics;
 
 
 import java.util.Arrays;
@@ -11,8 +11,7 @@ import java.util.function.IntFunction;
 public class TestPair {
     public static Pair<String> minmax(String[] input) throws NullPointerException {
 
-        if (input == null || input.length == 0)
-            throw new NullPointerException();
+        if (input == null) throw new NullPointerException();
 
         String min = input[0];
         String max = input[0];
@@ -22,27 +21,19 @@ public class TestPair {
             max = s.compareTo(max) > 0 ? s : max;
         }
 
-        /* no need anymore
-        for (int i = 1; i<input.length; i++) {
-            min = input[i].compareTo(min) > 0 ? min : input[i];
-            max = input[i].compareTo(max) > 0 ? input[i] : max;
-        }
-        */
-
         return new Pair<>(min, max);
     }
 
     public static Pair<Integer> minmax(int[] input) throws NullPointerException {
 
-        if (input == null || input.length == 0)
-            throw new NullPointerException();
+        if (input == null) throw new NullPointerException();
 
         int min = input[0];
         int max = input[0];
 
         for (int s: input) {
-            min = s > min ? min : s;
-            max = s > max ? s : max;
+            min = Math.min(s, min);
+            max = Math.max(s, max);
         }
 
         return new Pair<>(min, max);
@@ -56,8 +47,7 @@ public class TestPair {
     */
     public static <T extends Comparable> T min(T[] input) throws NullPointerException {
 
-        if (input == null || input.length == 0)
-            throw new NullPointerException();
+        if (input == null) throw new NullPointerException();
 
         T min = input[0];
         T max = input[0];
@@ -72,8 +62,7 @@ public class TestPair {
 
     public static <T extends Comparable> Pair<T> minmax(T[] input) throws NullPointerException {
 
-        if (input == null || input.length == 0)
-            throw new NullPointerException();
+        if (input == null) throw new NullPointerException();
 
         T min = input[0];
         T max = input[0];

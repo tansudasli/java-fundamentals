@@ -1,4 +1,4 @@
-package com.core.generic;
+package com.core.generics;
 
 /**
  * Pair will act as a factory class*/
