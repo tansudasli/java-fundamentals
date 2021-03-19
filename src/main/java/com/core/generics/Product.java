@@ -54,8 +54,10 @@ public class Product<T, U> {
          * so, id, desc must be int. Or we need to add more generic types at class level like <T,U,W>!
          */
         Product<Integer, String> product = new Product<>(1, "Tansu", 1000);
+        Product<String, String> product2 = new Product<>("10000eyZuu8", "Tansu", "1000");
 
         System.out.println(product.toString());
+        System.out.println(product2.toString());
     }
 }
 
