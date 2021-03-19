@@ -1,13 +1,18 @@
 package com.core.generics;
 
 /**
- * Data<T> is T type. So we can use data as integer, string etc..
+ * Data<T> is T type. So we can use data as integer, string etc..<br/>
+ * - Generics class  can be implemented using generic Interfaces . <br/>
+ * - There are also generic interfaces such as Comparable<T> ... <br/>
+ * - All Collection class was rewritten. So an ArrayList can hold int or string at the sametime .<br/>
+ *
+ *<br><br>
  *
  * @param <T>
  */
 public class Data<T> implements IData<T> {  //added <T> to define as generics !!
 
-    private T data;
+    private T data;  //here is 1 generic type. so at class level only 1 !!
 
     public Data(T data) {
         this.data = data;
@@ -30,7 +35,7 @@ public class Data<T> implements IData<T> {  //added <T> to define as generics !!
                 '}';
     }
 
-    //main
+    //lets test
     public static void main(String[] args) {
         Data<Integer> d1 = new Data<>(10);
         System.out.println(d1);
