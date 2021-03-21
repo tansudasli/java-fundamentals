@@ -1,4 +1,4 @@
-package com.core.fp;
+package com.fp;
 
 import java.security.SecureRandom;
 import java.util.stream.Collectors;

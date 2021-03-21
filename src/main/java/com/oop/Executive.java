@@ -1,4 +1,4 @@
-package com.core.oop;
+package com.oop;
 
 /* not extendable ! (final keyword)*/
 public final class Executive extends Manager {

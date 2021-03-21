@@ -1,5 +1,8 @@
-package com.core.generics;
+package com.generics;
 
+/*
+generic class
+ */
 public class Product<T, U> {
 
     private T id;    //at class level we added T, so class is generic type

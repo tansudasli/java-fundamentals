@@ -1,4 +1,4 @@
-package com.core.oop;
+package com.oop;
 
 /* Extends Employee class for some additional fields and functions...
 * */

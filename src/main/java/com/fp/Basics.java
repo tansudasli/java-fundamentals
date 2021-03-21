@@ -1,13 +1,9 @@
-package com.core.fp;
+package com.fp;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.IntPredicate;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static java.util.Arrays.stream;
 
@@ -15,7 +11,7 @@ public class Basics {
 
     static int[] v = {3, 10, 6, 1, 4, 8, 2, 5, 9, 7};
     static Integer[] vO = {2, 9, 5, 0, 3, 7, 1, 4, 8, 6};
-    static List<Integer> vL = Arrays.asList(vO);
+    static List<Integer> vL = List.of(vO); // java8 syntax ->  Arrays.asList(vO);
 
 
     public static void main(String[] args) {

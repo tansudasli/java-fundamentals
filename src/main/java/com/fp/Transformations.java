@@ -1,4 +1,4 @@
-package com.core.fp;
+package com.fp;
 
 import java.util.Arrays;
 import java.util.List;

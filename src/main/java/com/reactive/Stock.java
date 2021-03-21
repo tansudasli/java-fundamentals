@@ -1,4 +1,4 @@
-package com.core.reactive;
+package com.reactive;
 
 public class Stock {
 

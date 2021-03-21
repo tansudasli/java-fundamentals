@@ -1,4 +1,4 @@
-package com.core.oop;
+package com.oop;
 
 public interface EmployeeHelper {
 
