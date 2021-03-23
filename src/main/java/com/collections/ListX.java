@@ -4,6 +4,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+//dummy class
+class Student {
+    public int id;
+    private String name;
+
+    public Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
 public class ListX {
     /* List
 
@@ -21,14 +39,26 @@ public class ListX {
      * new ArrayList<>()  - mutable creation
      * List.of()  - immutable creation
      *
+     * Use Comparator... static methods for functional staffs
+     *
+     * get a stream list.stream(). then use functional staffs. instead of classical for loops, sorting
+        searching etc..
+     *
+     * to compare a Class (Student such as), you have to implement Comparable interface.
+       But if u use functional programming style you dont need. Just use Comparator functions
+       whether ..stream().sorted(Comparable...) or ..sort(Comparator...)
      */
 
     public static void main(String[] args) {
         //create and init
-        List<String> words = List.of("Ali", "Veli", "Deli"); //of method creates immutable
+        List<String> words = List.of("Ali", "Yelli", "Deli", "Ho"); //of method creates immutable
         List<String> wordsA = new ArrayList<>(words);  //mutable, index based
         List<Integer> numbersA = IntStream.range(1, 10).boxed().collect(Collectors.toList());    //mutable, index based
         LinkedList<String> wordsL = new LinkedList<>(words); //mutable, linked (not index-based)
+
+        List<Student> students = new ArrayList<>(List.of(new Student(1, "Ali"),
+                                                         new Student(3, "Veli"),
+                                                         new Student(2, "Halim")));
 
         List wordRaw = List.of("Ali", 'B', 12, 35);    //raw, heterogen
 
@@ -66,9 +96,6 @@ public class ListX {
         //via searching
         System.out.println(wordsA.contains("Mali"));
 
-        //via, functional
-        words.stream().forEach(System.out::println);
-        words.stream().filter(word -> word.contains("Mali")).forEach(System.out::println);
 
         //sorting, Collections.sort() or ...sort(Comparator<? expands E>
         //class has to implement Comparable interface which overloads compareTo method
@@ -97,9 +124,19 @@ public class ListX {
 //        Collections.sort(wordsA, (o1, o2) -> o1.length() - o2.length());
 //        wordsA.sort((o1, o2) -> o1.length() - o2.length());
         wordsA.sort(Comparator.comparingInt(String::length));
-
         System.out.println(wordsA);
 
+        students.sort(Comparator.comparing(student -> student.id));
+        System.out.println(students);
+
+
+        //via, functional
+        words.stream().forEach(System.out::println);
+        words.stream().filter(word -> word.contains("Mali")).forEach(System.out::println);
+        words.stream().sorted(Comparator.comparingInt(String::length)).forEach(System.out::println);
+
+        //i did not implemented Comparator interface :) in Student class !! no need in functional programming
+        students.stream().sorted(Comparator.comparing(student -> student.id)).forEach(System.out::println);
 
 
 
