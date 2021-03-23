@@ -41,6 +41,8 @@ public class ListX {
      *
      * Use Comparator... static methods for functional staffs
      *
+     * Use lambda instead of anonymous class Comparator
+     *
      * get a stream list.stream(). then use functional staffs. instead of classical for loops, sorting
         searching etc..
      *
@@ -126,6 +128,7 @@ public class ListX {
         wordsA.sort(Comparator.comparingInt(String::length));
         System.out.println(wordsA);
 
+        //i did not implemented Comparator interface :) in Student class !! no need in functional programming
         students.sort(Comparator.comparing(student -> student.id));
         System.out.println(students);
 
