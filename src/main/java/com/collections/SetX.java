@@ -37,7 +37,7 @@ public class SetX {
         System.out.println(linkedHashed);
         System.out.println(tree);
 
-        List<Character> ch = List.of('A', 'Z', 'A', 'B', 'F', 'Z');
+        List<Character> ch = List.of('A', 'Z', 'K', 'M', 'A', 'B', 'F', 'Z');
         Set<Character> chSet = new LinkedHashSet<>(ch);
 
         System.out.println(chSet); //unique and insert-order preserved
