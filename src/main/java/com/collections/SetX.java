@@ -1,6 +1,8 @@
 package com.collections;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class SetX {
@@ -44,5 +46,18 @@ public class SetX {
         System.out.println(new TreeSet<Character>(ch));  //unique and sorted-order
 
         (ch.stream().collect(Collectors.toSet())).forEach(System.out::println);
+
+        //treeset specific navigable interface functions
+        TreeSet<Integer> t = new TreeSet<>(Set.of(1, 23, 245, 35, 24, 12, 34, 33));
+
+        System.out.println(t.floor(30));  // the greatest number less than 30
+
+        Predicate<Integer> floor30 = x -> x < 30;
+        t.stream()     // the greatest number less than 30 via streams
+                .sorted(Comparator.reverseOrder())
+                .filter(floor30)   //v -> v <= 30
+                .findFirst()
+                .ifPresent(System.out::println);
+
     }
 }
