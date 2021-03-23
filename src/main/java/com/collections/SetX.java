@@ -1,6 +1,7 @@
 package com.collections;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SetX {
     /*
@@ -41,5 +42,7 @@ public class SetX {
 
         System.out.println(chSet); //unique and insert-order preserved
         System.out.println(new TreeSet<Character>(ch));  //unique and sorted-order
+
+        (ch.stream().collect(Collectors.toSet())).forEach(System.out::println);
     }
 }
