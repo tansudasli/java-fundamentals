@@ -1,9 +1,6 @@
 package com.collections;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SetX {
     /*
@@ -18,6 +15,7 @@ public class SetX {
      */
 
     public static void main(String[] args) {
+
         Set<String> set = Set.of("Ali", "Veli", "Malim", "Halim");
         Set<String> setHashed = new HashSet<>(set);
         Set<String> setLinkedHashed = new LinkedHashSet<>(set);
@@ -38,6 +36,10 @@ public class SetX {
         System.out.println(linkedHashed);
         System.out.println(tree);
 
+        List<Character> ch = List.of('A', 'Z', 'A', 'B', 'F', 'Z');
+        Set<Character> chSet = new LinkedHashSet<>(ch);
 
+        System.out.println(chSet); //unique and insert-order preserved
+        System.out.println(new TreeSet<Character>(ch));  //unique and sorted-order
     }
 }
