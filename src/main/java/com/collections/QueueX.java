@@ -1,5 +1,6 @@
 package com.collections;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -19,12 +20,15 @@ public class QueueX {
 
     public static void main(String[] args) {
 
-        List<String> list = List.of("Zebra", "Monkey", "Cat");
+        List<String> list = List.of("Fly", "Zebra", "Monkey", "Cat", "X");
 
         //init
         Queue<String> queue = new PriorityQueue<>(); //or, new PriorityQueue<>(list)
                                                      //or, queue.addAll(list)
                                                      //or, list.stream().forEach(queue::add)
+
+        //diff priority
+        Queue<String> queueByLength = new PriorityQueue<>(Comparator.comparingInt(String::length));
 
         //add
         queue.offer("Apple"); queue.offer("Orange");
@@ -32,5 +36,10 @@ public class QueueX {
 
         queue.poll(); //get head
         System.out.println(queue);
+
+        queueByLength.addAll(list);
+        System.out.println(queueByLength);
+
+
     }
 }
