@@ -8,7 +8,7 @@ import java.util.List;
  * - Generics class also can be implemented using generic Interfaces . <br/>
  * - There are also generic interfaces such as Comparable<T> ... <br/>
  * - All Collection classes were rewritten. So an ArrayList can hold int or string at the sametime .<br/>
- * - there are class level and method level generics..
+ * - There are class level and method level generics
  *
  *<br><br>
  * Representations<br>
