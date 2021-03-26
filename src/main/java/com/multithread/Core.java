@@ -40,6 +40,15 @@ public class Core {
      *
      */
 
+    static void kickTask() {
+        System.out.println("Task-3 started");
+
+        for (int i = 201 ; i < 250; i++)
+            System.out.println(i + " " + Thread.currentThread());
+
+        System.out.println("Task-3 done");
+    }
+
     public static void main(String[] args) {
         //Thread-0
         (new Task1()).start();
@@ -53,7 +62,8 @@ public class Core {
         //Thread-1
         new Thread(new Task2()).start();
 
-        //using anonymous class
+        //Thread-3 : using anonymous class or lambda
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -64,7 +74,18 @@ public class Core {
 
                 System.out.println("Task-3 done");
             }
+        }).start(); */
+        /*
+        new Thread(() -> {
+            System.out.println("Task-3 started");
+
+            for (int i = 201 ; i < 250; i++)
+                System.out.println(i + " " + Thread.currentThread());
+
+            System.out.println("Task-3 done");
         }).start();
+         */
+        new Thread(Core::kickTask).start();
 
         //Thread-main : above threads are done after main thread is done !!
         System.out.println("main done " + Thread.currentThread());
