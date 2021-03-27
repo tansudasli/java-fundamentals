@@ -28,20 +28,27 @@ public class ThreadReturnValues {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
+        //Thread controlling
         ExecutorService exec = Executors.newFixedThreadPool(2);
+
+        //a Task that implemented Callable interface
         String result = exec.submit(new Task("Tansu"))
                             .get();
 
         System.out.println(result);
 
-        //a Task that implemented Callable interface
+        //a Task that implemented Callable interface (anonymous class)
         System.out.println(
-                exec.submit(() -> {
+                exec.submit(new Callable<String>() {
 
-                    Thread.sleep(1000);
+                                @Override
+                                public String call() throws Exception {
+                                    Thread.sleep(1000);
 
-                    return "Hello " + Thread.currentThread();
-                })                //Future<String
+                                    return "Hello " + Thread.currentThread();
+                                }
+                            }
+                )                //Future<String
                 .get()            //String
         );
 
