@@ -42,7 +42,16 @@ public class Core {
      * - blocked/waiting
      * - terminated/dead (done)
      *
-     * Depends another thread complete
+     * Depends another thread complete or gives a chance
+     * - Task1.join()
+     * - Thread.wait() or Thread.yield()
+     *
+     * Thread safety
+     * - synchronized keyword : only 1 thread would be able to execute all synced methods
+         at that time in that class. Others are wait
+     *
+     * Thread controlling
+     * - very limited capabilities. So we need ExecutorService !!
      *
      */
 
