@@ -38,20 +38,32 @@ public class ThreadReturnValues {
         System.out.println(result);
 
         //a Task that implemented Callable interface (anonymous class)
+//        System.out.println(
+//                exec.submit(new Callable<String>() {
+//
+//                                @Override
+//                                public String call() throws Exception {
+//                                    Thread.sleep(1000);
+//
+//                                    return "Hello " + Thread.currentThread();
+//                                }
+//                            }
+//                )                //Future<String
+//                .get()            //String
+//        );
+
+        //a Task that implemented Callable interface (with lambda )
         System.out.println(
-                exec.submit(new Callable<String>() {
-
-                                @Override
-                                public String call() throws Exception {
-                                    Thread.sleep(1000);
-
-                                    return "Hello " + Thread.currentThread();
-                                }
-                            }
-                )                //Future<String
-                .get()            //String
+                exec.submit(() -> handleTask("Tansu"))                   //Future<String
+                     .get()            //String
         );
 
 
+    }
+
+    private static String handleTask(String name) throws InterruptedException {
+        Thread.sleep(1000);
+
+        return "Hello " + name + " " + Thread.currentThread();
     }
 }
