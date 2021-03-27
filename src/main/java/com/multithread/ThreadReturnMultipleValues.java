@@ -26,9 +26,9 @@ public class ThreadReturnMultipleValues {
 //        for (Future<String> r : results)
 //            System.out.println(r.get());
 
-        exec.invokeAll(tasks).forEach(c-> {
+        exec.invokeAll(tasks).forEach(result -> {
             try {
-                System.out.println(c.get());
+                System.out.println(result.get());
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
