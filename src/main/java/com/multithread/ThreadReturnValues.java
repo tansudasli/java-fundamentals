@@ -59,6 +59,7 @@ public class ThreadReturnValues {
         );
 
 
+        exec.shutdown();
     }
 
     private static String handleTask(String name) throws InterruptedException {
