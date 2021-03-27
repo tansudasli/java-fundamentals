@@ -36,7 +36,13 @@ public class Core {
      * - implement Runnable:
      *
      * Thread states
+     * - new (created, but not started)
+     * - runnable (was running but not finished yet)
+     * - running (actively running)
+     * - blocked/waiting
+     * - terminated/dead (done)
      *
+     * Depends another thread complete
      *
      */
 
@@ -49,9 +55,10 @@ public class Core {
         System.out.println("Task-3 done");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //Thread-0
-        (new Task1()).start();
+        Task1 task1 = new Task1();
+        task1.start();
 
         //Thread-main
         /*
@@ -61,6 +68,9 @@ public class Core {
 
         //Thread-1
         new Thread(new Task2()).start();
+
+        //wait Task1 complete, then run below lines/threading things
+        task1.join();
 
         //Thread-3 : using anonymous class or lambda
         /*
