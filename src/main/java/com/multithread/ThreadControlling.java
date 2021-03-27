@@ -6,9 +6,12 @@ import java.util.concurrent.Executors;
 public class ThreadControlling {
     /*
      * Thread Controlling
+     * Basically, creates a thread pool with specific thread count
+     *
      *  - Executors.newSingleThreadExecutor() : 1 thread in pool
      *  - Executors.newFixedThreadPool(n)    : n threads in pool
      *
+     * How to return value from threads ?
      *
      */
 
