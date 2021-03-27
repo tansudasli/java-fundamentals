@@ -19,7 +19,21 @@ public class ThreadReturnMultipleValues {
         //executor
         ExecutorService exec = Executors.newFixedThreadPool(2);
 
-        List<Task> tasks = List.of(new Task("Tansu"), new Task("Zabid"), new Task("Abidin"));
+        List<Task> tasks = List.of(new Task("Tansu"),
+                new Task("Zabid"),
+                new Task("Abidin"),
+                new Task("Zabid"),
+                new Task("Kabil"),
+                new Task("Habil"),
+                new Task("Mabel"),
+                new Task("halo"),
+                new Task("malo"),
+                new Task("cano"),
+                new Task("kano"));
+
+        /*
+         * invokeAll executes all but also waits all!
+         */
 
         //trigger
 //        List<Future<String>> results = exec.invokeAll(tasks);   //List<Future<String>>
