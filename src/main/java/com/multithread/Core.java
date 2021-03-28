@@ -41,7 +41,16 @@ public class Core {
      * - Normal way has very limited capabilities.
            - Task1.join()
            - Thread.wait() or Thread.yield()
+           - threads that raised InterruptedException
+           - thread which handles exceptions explicitly
      * - So we need ExecutorService !!
+     *
+     * to handle Interruptions, we have 2 options.
+     * a- some methods forces to catch InterruptedException (thread.sleep()), so in case of explicitly
+          thread.interrupt(), you can do something.
+     * b- in case of, (in real cases, you do normal do staffs), no InterruptedException catch block mandatory,
+          so, you have to listen to Thread.currentThread().isInterrupted(), and handle properly.
+          to do so, you need to pinpoint possible long running steps
      *
      *
      * Thread states
