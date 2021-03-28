@@ -1,5 +1,9 @@
 package com.multithread;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class BlockingThread {
 
     public static void BlockingTask() {
@@ -14,8 +18,11 @@ public class BlockingThread {
     }
 
     public static void main(String[] args) {
-        Thread thread = new Thread(BlockingThread::BlockingTask, "Blocking-Task");
+        //ExecuterService handles better thread management. so we need basic management
+//        ExecutorService exec = Executors.newFixedThreadPool(2);
+//        exec.execute(BlockingThread::BlockingTask);
 
+        Thread thread = new Thread(BlockingThread::BlockingTask, "Blocking-Task");
         thread.start();     //will run thread. and it blocks main-thread
 
         thread.interrupt(); //interrupt explicitly.
