@@ -18,7 +18,7 @@ public class BlockingThread {
     }
 
     public static void main(String[] args) {
-        //ExecuterService handles better thread management. so we need basic management
+        //ExecutorService handles better thread management. so we need basic management
 //        ExecutorService exec = Executors.newFixedThreadPool(2);
 //        exec.execute(BlockingThread::BlockingTask);
 
