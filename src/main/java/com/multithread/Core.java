@@ -37,10 +37,10 @@ public class Core {
      *
      * Thread controlling
      * - Normal way (new Thread() ..) has very limited capabilities for grouping threads (.join), wait(),
-         exception handling (esp. explicitly) etc..
+         exception handling (esp. explicitly) or returning values etc..
 
          new Thread(Core::kickTask).start();
-     * - So we need better controlling capabilities. Use ExecutorService ..= Executors.!!
+     * - So we need better controlling capabilities. Use ExecutorService exec = Executors.newFixedThreadPool(2);
           * Function types (void or returns something)
              - for void types: extends Thread or implement Runnable or use lambda.
                 Use Executors.execute() (standalone) method
@@ -63,6 +63,7 @@ public class Core {
      * - synchronized : only 1 thread would be able to execute all synced methods
          at that time in that class. Others are wait, even if they need other methods in the class.
      * - lock: separate locks possible at line level. better approach
+               Lock lock = new ReentrantLock()
      * - atomic classes: only for basic arithmetics (add, sub, etc...)
      *     - AtomicInteger ( Atomic....)
      *     - LongAdder
