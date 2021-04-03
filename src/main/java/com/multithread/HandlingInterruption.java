@@ -1,10 +1,14 @@
 package com.multithread;
 
+import java.math.BigInteger;
+
+import static java.lang.Thread.sleep;
+
 public class HandlingInterruption {
 
     public static void BlockingTask() {
         try {
-            Thread.sleep(50000);
+            sleep(50000);
 
         } catch (InterruptedException e) { //so this part can be used some clearing staffs, logging etc..
             e.printStackTrace();
@@ -15,17 +19,20 @@ public class HandlingInterruption {
 
     public static void LongRunningTask(Integer base, Integer power) {
 
-        Integer result = 1;
+        BigInteger result = BigInteger.ONE;
+
         for (int i = 0; i < power; i++) {
             //do some staffs, depending on parameters, it may take long time
-            //so we have to listen interruption
+            //so we have to listen to explicit interruptions !!
             if (Thread.currentThread().isInterrupted()) {
                 //
                 System.out.println(Thread.currentThread().getName() + " interrupted");
-                result = 0;
+                result = BigInteger.ZERO;
+
                 break;
             }
-            result *= base;
+
+            result = result.multiply(BigInteger.valueOf(base));
         }
 
         System.out.print( base + "^" + power + " = " + result);
@@ -33,12 +40,12 @@ public class HandlingInterruption {
 
     /* Handling Interruption
      *
-     * a- some methods forces to catch InterruptedException, so if explicitly thread.interrupt()
+     * a- some methods forces to catch InterruptedException, so if explicitly call thread.interrupt(),
           you can do something.
      * b- in case of, (in real cases, you do normal do staffs), no catch block mandatory, you have to
           listen to Thread.currentThread().isInterrupted(), and handle properly.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //ExecutorService handles better thread management. so we need basic management
 //        ExecutorService exec = Executors.newFixedThreadPool(2);
 //        exec.execute(BlockingThread::BlockingTask);
@@ -51,14 +58,13 @@ public class HandlingInterruption {
         //b-when we run in debug mode, it is running too much time. then we push stop,
         //but it goes to run continually  !!.
         //so we have to handle pinpoints for long running steps
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                LongRunningTask(3, 2);  //
-                LongRunningTask(300, 2000000000);
-            }
-        }, "LongRunning-Thread");
+        //LongRunningTask(3, 2);
+        Thread thread = new Thread(() -> LongRunningTask(3, 20000),
+                            "LongRunning-Thread");
 
         thread.start();
+
+        thread.interrupt();  //explicitly interrupt, and handle in the task. otherwise, it ain't responds
+
     }
 }
