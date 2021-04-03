@@ -28,22 +28,30 @@ public class Core {
     /*
      * Multi-threading (IO intensive or Computing intensive)
      *
-     * 2 ways
-     * - for void types: extends Thread or implement Runnable or use lambda.
-         Use Executors.execute() method
-     * - to return something: implement Callable<> or lambda, which returns Future<>
-         Use Executors.submit() or Executors.invokeAll() (logical grouping tasks and waits all) method.
+     * Approaches (throughput vs latency). Choose mostly 2nd approach over 1st!!
+       Threading has initial penalty. So many short tasks does not have advantage when we use multithreading.
+       Evaluate the situations.
+     * a- One task that is divided into sub-tasks, and multi-threads
+     * b- Multiple requests, and one task handled by one thread
+     *
      *
      * Thread controlling
-     * - Normal way has very limited capabilities.
-           - Task1.join()
-           - Thread.wait() or Thread.yield()
-           - threads that raised InterruptedException
-           - thread which handles exceptions explicitly
-     * - So we need ExecutorService !!
+     * - Normal way (new Thread() ..) has very limited capabilities for grouping threads (.join), wait(),
+         exception handling (esp. explicitly) etc..
+
+         new Thread(Core::kickTask).start();
+     * - So we need better controlling capabilities. Use ExecutorService ..= Executors.!!
+          * Function types (void or returns something)
+             - for void types: extends Thread or implement Runnable or use lambda.
+                Use Executors.execute() (standalone) method
+            - to return something: implement Callable<> or lambda, which returns Future<>
+                Use Executors.submit() (standalone) method.
+
+            Use, Executors.invokeAll() (for logical grouping the tasks and waits all) method.
      *
-     * to handle Interruptions, we have 2 options.
-     * a- some methods forces to catch InterruptedException (thread.sleep()), so in case of explicitly
+     *
+     * Handling Interruptions, we have 2 options.
+     * a- some methods forces to catch InterruptedException (thread.sleep()), so in case of calling explicitly
           thread.interrupt(), you can do something.
      * b- in case of, (in real cases, you do normal do staffs), no InterruptedException catch block mandatory,
           so, you have to listen to Thread.currentThread().isInterrupted(), and handle properly.
@@ -51,17 +59,18 @@ public class Core {
      *
      *
      *
-     * Thread safety
-     * - synchronized keyword : only 1 thread would be able to execute all synced methods
-         at that time in that class. Others are wait
-     * - lock: separate locks possible. better approach
-     * - atomic class: only for basic arithmetics
-     *     - AtomicInteger
+     * Thread safety (Check shared resources usages)
+     * - synchronized : only 1 thread would be able to execute all synced methods
+         at that time in that class. Others are wait, even if they need other methods in the class.
+     * - lock: separate locks possible at line level. better approach
+     * - atomic classes: only for basic arithmetics (add, sub, etc...)
+     *     - AtomicInteger ( Atomic....)
+     *     - LongAdder
      * - concurrent collections: for specific scenarios (where we used Collections)
-     *     - HashTable (thread safe version)
+     *     - HashTable (thread safe version). But uses synchronized keyword. not performant
      *     - ConcurrentHashMap (more methods and more threadsafe and more performant than Hashtable)
      *
-     * so use, lock and atomic classes where applicable
+     * so use, lock and atomic classes and ConcurrentHashMap where applicable
      *
      *
      * Thread states
@@ -97,9 +106,10 @@ public class Core {
         new Thread(new Task2()).start();
 
         //wait Task1 complete, then run below lines/threading things
+        //till than below lines wont run !!!
         task1.join();
 
-        //Thread-3 : using anonymous class or lambda
+        //Thread-2 : using anonymous class or lambda
         /*
         new Thread(new Runnable() {
             @Override
@@ -122,9 +132,11 @@ public class Core {
             System.out.println("Task-3 done");
         }).start();
          */
+
+        //below lambda, we can also provide thread name and group
         new Thread(Core::kickTask).start();
 
-        //Thread-main : above threads are done after main thread is done !!
+        //Thread-main : below line is completed  after task1 completion and before kickTask lines !!
         System.out.println("main done " + Thread.currentThread());
     }
 
