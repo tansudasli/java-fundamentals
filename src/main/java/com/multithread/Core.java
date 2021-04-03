@@ -64,7 +64,14 @@ public class Core {
      * Thread safety
      * - synchronized keyword : only 1 thread would be able to execute all synced methods
          at that time in that class. Others are wait
+     * - lock: separate locks possible. better approach
+     * - atomic class: only for basic arithmetics
+     *     - AtomicInteger
+     * - concurrent collections: for specific scenarios (where we used Collections)
+     *     - HashTable (thread safe version)
+     *     - ConcurrentHashMap (more methods and more threadsafe and more performant than Hashtable)
      *
+     * so use, lock and atomic classes where applicable
      *
      */
 
