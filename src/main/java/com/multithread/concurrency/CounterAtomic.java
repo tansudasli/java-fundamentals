@@ -13,7 +13,9 @@ public class CounterAtomic {
      * So, we can
      * 1- synchronized: but only 1 thread can use this class. even there are different methods!! not performant.
      * 2- lock
-     * 3- atomic class : for basic ops only
+     * 3- atomic class : for basic arithmetic ops only
+     * 4- Concurrent collections: for specific scenarios
+     *
      */
     public void incrementI() {
         i.incrementAndGet();
