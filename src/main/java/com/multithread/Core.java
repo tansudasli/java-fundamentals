@@ -26,15 +26,12 @@ class Task2 implements Runnable {
 
 public class Core {
     /*
-     * Multi-threading
-     *
-     * - IO intensive
-     * - Computing intensive
+     * Multi-threading (IO intensive or Computing intensive)
      *
      * 2 ways
-     * - for void types: extends Thread or implement Runnable.
+     * - for void types: extends Thread or implement Runnable or use lambda.
          Use Executors.execute() method
-     * - to return something: implement Callable<>, which returns Future<>
+     * - to return something: implement Callable<> or lambda, which returns Future<>
          Use Executors.submit() or Executors.invokeAll() (logical grouping tasks and waits all) method.
      *
      * Thread controlling
@@ -53,13 +50,6 @@ public class Core {
           to do so, you need to pinpoint possible long running steps
      *
      *
-     * Thread states
-     * - new (created, but not started)
-     * - runnable (was running but not finished yet)
-     * - running (actively running)
-     * - blocked/waiting
-     * - terminated/dead (done)
-     *
      *
      * Thread safety
      * - synchronized keyword : only 1 thread would be able to execute all synced methods
@@ -72,6 +62,14 @@ public class Core {
      *     - ConcurrentHashMap (more methods and more threadsafe and more performant than Hashtable)
      *
      * so use, lock and atomic classes where applicable
+     *
+     *
+     * Thread states
+     * - new (created, but not started)
+     * - runnable (was running but not finished yet)
+     * - running (actively running)
+     * - blocked/waiting
+     * - terminated/dead (done)
      *
      */
 
