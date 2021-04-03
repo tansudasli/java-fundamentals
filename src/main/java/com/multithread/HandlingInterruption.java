@@ -24,6 +24,7 @@ public class HandlingInterruption {
         for (int i = 0; i < power; i++) {
             //do some staffs, depending on parameters, it may take long time
             //so we have to listen to explicit interruptions !!
+            //otherwise, it goes on to run !!
             if (Thread.currentThread().isInterrupted()) {
                 //
                 System.out.println(Thread.currentThread().getName() + " interrupted");
@@ -64,7 +65,8 @@ public class HandlingInterruption {
 
         thread.start();
 
-        thread.interrupt();  //explicitly interrupt, and handle in the task. otherwise, it ain't responds
+        thread.interrupt();  //explicitly interrupt, and handle in the task. otherwise,
+                             // it ain't responds and continues to run which may lead to blocking somethings
 
     }
 }
