@@ -16,7 +16,7 @@ public class Occurrences {
         //third, occur is a local variable. so it is not shared by threads
 //        Map<Character, Integer> occur = new HashMap<>();   //not thread safe
 
-//        Map<Character, LongAdder> occur = new Hashtable<>();
+//        Map<Character, LongAdder> occur = new Hashtable<>(); //less performant
         ConcurrentMap<Character, LongAdder> occur = new ConcurrentHashMap<>();
 
         for (Character ch: line.toLowerCase(Locale.ROOT).toCharArray()) {
@@ -39,7 +39,7 @@ public class Occurrences {
 //            occur.put(ch, count);
 
             occur.computeIfAbsent(ch, c -> new LongAdder())
-                    .increment();
+                 .increment();
         }
 
 
