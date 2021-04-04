@@ -26,7 +26,13 @@ class Task2 implements Runnable {
 
 public class Core {
     /*
-     * Multi-threading (IO intensive or Computing intensive)
+     * First define the problem's technique that suits best
+     * Multi-processing:  good for cpu intensive staffs where less IO (storage, networking) staffs available
+     * Multi-threading:   good for IO (storage, networking) intensive things that creates more cpu latency
+     *   - throughput (dividing into sub-tasks = thread)
+     *   - latency (task = thread)
+     * Distributed Computing
+     * Quantum computing: good for probabilistic calculations
      *
      * Approaches (throughput vs latency). Choose mostly 2nd approach over 1st!!
        Threading has initial penalty. So many short tasks does not have advantage when we use multithreading.
