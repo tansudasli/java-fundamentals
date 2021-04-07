@@ -63,13 +63,23 @@ public class ComplexCalculation {
              * Future<BigInteger> r1 = executorService.submit(t1);
              */
 
+            //nonblocking style. separate task, future and get calls.
+            //and we need 2 results to calculate sum, and get() is guaranteee that.
+            //do we need invokeAll ?
+            Callable<BigInteger> t1 = () -> calculatePower(2,1000);
+            Callable<BigInteger> t2 = () -> calculatePower(3,1000);
+
+            Future<BigInteger> f1 = executorService.submit(t1);
+            Future<BigInteger> f2 = executorService.submit(t2);
+
+            System.out.println(f1.get().add(f2.get()));
 
 
             //below is blocking. thread2 does not start till thread1 ends. due to get() call
-           BigInteger r1 = executorService.submit(() -> calculatePower(200,1000)).get();
-           BigInteger r2 = executorService.submit(() -> calculatePower(3,1000)).get();
-
-            System.out.println(r1.add(r2));
+//           BigInteger r1 = executorService.submit(() -> calculatePower(200,1000)).get();
+//           BigInteger r2 = executorService.submit(() -> calculatePower(3,1000)).get();
+//
+//            System.out.println(r1.add(r2));
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
