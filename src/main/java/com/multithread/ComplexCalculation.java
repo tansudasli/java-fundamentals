@@ -1,7 +1,6 @@
 package com.multithread;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.concurrent.*;
 
 public class ComplexCalculation {
@@ -12,11 +11,11 @@ public class ComplexCalculation {
 
         System.out.println(Thread.currentThread().getName() + "..started  ");
 
-        if (power == 0)
-            return result;
+        if (power == 0) return result;
 
         for (int i = 0; i < power; i++) {
             System.out.println(Thread.currentThread().getName() + "  " + i);
+
             //handle interruption
             if (Thread.currentThread().isInterrupted()) {
 
@@ -55,7 +54,8 @@ public class ComplexCalculation {
 
         try {
             /*
-             * if we use get() like below, then it blocks!!
+             * if we use get() like below, then it blocks!! and also guarantee that all results
+             * will be ready at sum step. Bad way to do it
              * BigInteger r1 = executorService.submit(() -> calculatePower(200,1000)).get();
              *
              * when we split lines, it becomes non-blocking
@@ -64,8 +64,10 @@ public class ComplexCalculation {
              */
 
             //nonblocking style. separate task, future and get calls.
-            //and we need 2 results to calculate sum, and get() is guaranteee that.
-            //do we need invokeAll ?
+            //and we need 2 results to calculate sum, and get() is guarantee that.
+            //below lines blend the thread1 and thread2 in the pool.
+            //and f1.get().add(f2.get()) guarantees that all results will be ready at sum step
+            //So, do we need invokeAll ?
             Callable<BigInteger> t1 = () -> calculatePower(2,1000);
             Callable<BigInteger> t2 = () -> calculatePower(3,1000);
 
@@ -74,12 +76,25 @@ public class ComplexCalculation {
 
             System.out.println(f1.get().add(f2.get()));
 
+            //using invokeAll().
+//            List<Callable> tasks = List.of(t1, t2);
+//            Collection<Callable<BigInteger>> tasks = List.of(t1, t2);
+//            executorService.invokeAll(tasks).stream().map(f -> {
+//                try {
+//                    return f.get();
+//                } catch (InterruptedException | ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+//                return BigInteger.ZERO;
+//            }).collect();
+
 
             //below is blocking. thread2 does not start till thread1 ends. due to get() call
 //           BigInteger r1 = executorService.submit(() -> calculatePower(200,1000)).get();
 //           BigInteger r2 = executorService.submit(() -> calculatePower(3,1000)).get();
 //
 //            System.out.println(r1.add(r2));
+
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
