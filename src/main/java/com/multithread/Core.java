@@ -34,11 +34,11 @@ public class Core {
      * Distributed Computing
      * Quantum computing: good for probabilistic calculations
      *
-     * Approaches (throughput vs latency). Choose mostly 2nd approach over 1st!!
+     * Approaches (throughput vs latency). Choose mostly 1st !!
        Threading has initial penalty. So many short tasks does not have advantage when we use multithreading.
        Evaluate the situations.
-     * a- One task that is divided into sub-tasks, and multi-threads
-     * b- Multiple requests, and one task handled by one thread
+     * a- LATENCY = One task that is divided into sub-tasks, and multi-threads
+     * b- THROUGHPUT = Multiple requests, and one task handled by one thread
      *
      *
      * Thread controlling
