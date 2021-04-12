@@ -76,6 +76,7 @@ public class Core {
      * - concurrent collections: for specific scenarios (where we used Collections)
      *     - HashTable (thread safe version). But uses synchronized keyword. not performant
      *     - ConcurrentHashMap (more methods and more threadsafe and more performant than Hashtable)
+     *     - CopyOnWriteArrayList (if you need, more read but less write, it is good)
      *
      * so use, lock and atomic classes and ConcurrentHashMap where applicable
      *
