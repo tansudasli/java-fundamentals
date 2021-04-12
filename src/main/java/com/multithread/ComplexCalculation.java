@@ -47,6 +47,8 @@ public class ComplexCalculation {
          * - write serial calculation                       DONE
          * - Thread controlling (Thread vs Executors)       Executors
          * - Throughput vs Latency                          Throughput
+         * - Shared resource usage                          NONE
+         * - Interruption handling (Manuel vs Auto)         MANUEL
          *
          */
 
