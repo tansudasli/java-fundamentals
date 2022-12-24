@@ -8,7 +8,7 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    maven { url 'https://oss.jfrog.org/libs-snapshot' }
+//    maven { url 'https://oss.jfrog.org/libs-snapshot' }  //to add .BUILD-SNAPSHOT below dependencies !
 }
 
 
