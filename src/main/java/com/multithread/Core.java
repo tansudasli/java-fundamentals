@@ -39,6 +39,7 @@ public class Core {
        Evaluate the situations.
      * a- LATENCY = One task that is divided into sub-tasks, and multi-threads
      * b- THROUGHPUT = Multiple requests, and one task handled by one thread
+     * c- PARTIAL = partially parallelizable, partially sequential
      *
      *
      * Thread controlling
