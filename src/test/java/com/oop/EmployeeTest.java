@@ -22,6 +22,7 @@ public class EmployeeTest {
      * resourceBundleName is for multi-language!
      */
     public static final Logger logs = Logger.getLogger("com.core", "logMessages");
+
     //Data mocking strategy: Array, ArrayList or Stream
     static List<Employee> staffList = Arrays.asList(TestData.staffs);
     static Stream<Employee> staffStream = staffList.stream();
@@ -40,7 +41,7 @@ public class EmployeeTest {
 
         checkData();
 
-        System.out.printf("test data is ready & OK");
+        System.out.print("test data is ready & OK");
 
     }
 
@@ -215,8 +216,9 @@ public class EmployeeTest {
                     , Employee.Type.PERMANENT
                     , Employee.Department.IT);
 
-            assertThrows(ClassCastException.class, () -> actual.compareTo(new Manager("abidin", 1000, 1, 1, 1111))
-                    , "Employee type compare not allowed !");
+            assertThrows(ClassCastException.class,
+                    () -> actual.compareTo(new Manager("abidin", 1000, 1, 1, 1111)),
+                    "Employee type compare not allowed !");
         }
 
         //TODO put all construction test into inner class for better readability
@@ -227,15 +229,13 @@ public class EmployeeTest {
         void testEmployeeName() {
 
             Throwable exception = assertThrows(IllegalArgumentException.class,
-                    () -> {
-                        new Employee(null
-                                , 100000
-                                , 1
-                                , 1
-                                , 2015
-                                , Employee.Type.PERMANENT
-                                , Employee.Department.IT);
-                    }
+                    () -> new Employee(null
+                            , 100000
+                            , 1
+                            , 1
+                            , 2015
+                            , Employee.Type.PERMANENT
+                            , Employee.Department.IT)
             );
             assertEquals("Employee name should not be empty", exception.getMessage());
         }
@@ -245,15 +245,14 @@ public class EmployeeTest {
         @Tag("functional")
         void testEmployeeSalary() {
 
-            Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-                        new Employee("Tansu"
-                                , 999
-                                , 1
-                                , 1
-                                , 2015
-                                , Employee.Type.PERMANENT
-                                , Employee.Department.IT);
-                    }
+            Throwable exception = assertThrows(IllegalArgumentException.class,
+                    () -> new Employee("Tansu"
+                    , 999
+                    , 1
+                    , 1
+                    , 2015
+                    , Employee.Type.PERMANENT
+                    , Employee.Department.IT)
             );
             assertEquals("Salary should be greater than 1000 TL. But it is just 999.0", exception.getMessage());
         }
@@ -279,7 +278,7 @@ public class EmployeeTest {
         expected.setHireDate(LocalDate.of(2020,1,1));
 
         assertTrue(expected.getSalary() != actual.getSalary(), "clone should be different object: salary");
-        assertTrue(expected.getHireDate() != actual.getHireDate(), "clone should be different object: hiredate");
+        assertNotSame(expected.getHireDate(), actual.getHireDate(), "clone should be different object: hiredate");
 
         //TODO we did not test Manager class clone capability!
     }
