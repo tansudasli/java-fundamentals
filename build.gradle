@@ -1,5 +1,5 @@
 plugins {
-    id 'java'   //java-library
+    id 'java'   //java-library, application
 }
 
 version '1.0-SNAPSHOT'
@@ -19,6 +19,12 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
 
 }
+
+//if .jar is executable and only one main class, add below
+//application {
+//    // Define the main class for the application.
+//    mainClass = 'app_gradle_project_java.App'
+//}
 
 tasks.named('test')  {
     useJUnitPlatform()
