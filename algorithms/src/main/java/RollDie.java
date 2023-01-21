@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 /**
  * Roll a die, and count the numbers in (1 to 6)
- *  
+ *
  * Face Frequency
  *    1         0
  *    2         0

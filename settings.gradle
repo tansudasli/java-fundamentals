@@ -1,3 +1,4 @@
 rootProject.name = 'java-fundamentals'
 include 'algorithms'
+include 'fp'
 

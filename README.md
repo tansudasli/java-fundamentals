@@ -11,6 +11,6 @@
 - to run,
     - Use IDE menu, chose class and right click,
     - or, `./gradlew jar` to build jar and 
-      run class from the jar like `java -cp /build/libs/java-fundamentals-1.0-SNAPSHOT.jar com.fp.Basics`
+      run class from the jar like `java -cp /build/libs/java-fundamentals-1.0-SNAPSHOT.jar com.Basics`
     - or, `java src/main/java/com/core/fp/TestStream4.java`
 
