@@ -1,31 +1,56 @@
 plugins {
-    id 'java'   //java-library, application
+    id 'java'   //java, java-library, application
+//    id 'application' //adds the run task. also add Application {main-class}
+//    id 'java-library' //adds the api command!
 }
 
+//group 'org.example'
 version '1.0-SNAPSHOT'
+java.sourceCompatibility JavaVersion.VERSION_17
 
-//sourceCompatibility = 1.9
+/* for multiple modules, inject into related build.gradle
+ * add below to use 'java -jar ..' command!
+ * else use 'gradle run' or 'java -cp ...jar className'
+ */
+//jar {
+//    manifest {
+//        attributes('Implementation-Title': 'Gradle Sandbox',
+//                'Implementation-Version': archiveVersion,
+////                   'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+//                'Main-Class': 'HelloWorld')
+//
+//    }
+//}
+
+// for gradle run task
+// Define the (full path) main class for the application.
+//application {
+//
+//    mainClass = 'core.Variables'
+//}
 
 repositories {
     mavenCentral()
-//    maven { url 'https://oss.jfrog.org/libs-snapshot' }  //to add .BUILD-SNAPSHOT below dependencies !
 }
 
 
 dependencies {
+    /**
+     * dependency, for build/run tasks
+     * but, java commands, use -cp to add core project jar!!
+     */
+//    implementation project(':core')
 
+    //    src/main folder related libs
     implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
 
+    //  src/test folder related libs
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
 
 }
 
-//if .jar is executable and only one main class, add below
-//application {
-//    // Define the main class for the application.
-//    mainClass = 'app_gradle_project_java.App'
-//}
-
-tasks.named('test')  {
+//test is already registered task. so you can inject like below!
+test  {
+    //for junit5
     useJUnitPlatform()
 }
