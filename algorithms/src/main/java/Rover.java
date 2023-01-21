@@ -1,5 +1,3 @@
-package com.algorithms;
-
 import java.util.Scanner;
 
 public class Rover {
@@ -14,8 +12,8 @@ public class Rover {
         private static int height;
 
         Plateau(int width, int height) {
-            this.width = width;
-            this.height = height;
+            Plateau.width = width;
+            Plateau.height = height;
         }
     }
 
@@ -140,7 +138,7 @@ public class Rover {
                 r.move(command);
             }
 
-            System.out.println(r.toString());
+            System.out.println(r);
         }
 
 

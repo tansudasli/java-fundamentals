@@ -1,5 +1,3 @@
-package com.algorithms;
-
 import java.security.SecureRandom;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -7,7 +5,7 @@ import java.util.stream.Collectors;
 
 /**
  * Roll a die, and count the numbers in (1 to 6)
- *
+ *  
  * Face Frequency
  *    1         0
  *    2         0
@@ -48,13 +46,13 @@ public class RollDie {
         System.out.println("Enter roll count\n");
         count = scanner.nextInt();
 
-        Long begin = System.nanoTime();
+        long begin = System.nanoTime();
 
         //switch to test
         //roll();
         roll2();
 
-        Long end = System.nanoTime() - begin;
+        long end = System.nanoTime() - begin;
         System.out.printf("took %d milliseconds", end/1000000);
     }
 }

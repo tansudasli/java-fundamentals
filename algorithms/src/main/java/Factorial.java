@@ -1,5 +1,3 @@
-package com.algorithms;
-
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -23,13 +21,13 @@ public class Factorial {
         System.out.println("Enter number:\n");
         count = scanner.nextInt();
 
-        Long begin = System.nanoTime();
+        long begin = System.nanoTime();
 
         //switch to test
         //System.out.println(factorial(count));
         System.out.println(IntStream.rangeClosed(1, count).reduce(1, (x,y) -> x*y));
 
-        Long end = System.nanoTime() - begin;
+        long end = System.nanoTime() - begin;
         System.out.printf("took %d milliseconds", end/1000000);
     }
 }

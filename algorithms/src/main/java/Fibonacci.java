@@ -1,5 +1,3 @@
-package com.algorithms;
-
 import java.util.Scanner;
 
 /**
@@ -22,13 +20,13 @@ public class Fibonacci {
         System.out.println("Enter number:\n");
         count = scanner.nextInt();
 
-        Long begin = System.nanoTime();
+        long begin = System.nanoTime();
 
         //switch to test
         System.out.println(fibonacci(count));
         //TODO with stream ?
 
-        Long end = System.nanoTime() - begin;
+        long end = System.nanoTime() - begin;
         System.out.printf("took %d milliseconds", end/1000000);
     }
 }

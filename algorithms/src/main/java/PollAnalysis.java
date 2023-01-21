@@ -1,5 +1,3 @@
-package com.algorithms;
-
 /**
  * Twenty students were asked to rate on a scale of 1 to 5 the quality of the food in the student cafeteria,
  * with 1 being “awful” and 5 being “excellent.”
@@ -14,16 +12,16 @@ public class PollAnalysis {
     public static void main(String[] args) {
 
         //so elegant
-        for (int i = 0; i< responses.length; i++)
+        for ( int i : responses)
             ++frequency[responses[i]];
 
 
 
         System.out.printf("%s%10s%n", "Rating", "Frequency");
-        /**
-        for (int rating = 1; rating < frequency.length; rating++)
-            System.out.printf("%6d%10d%n", rating, frequency[rating]);
-         */
+
+//        for (int rating = 1; rating < frequency.length; rating++)
+//            System.out.printf("%6d%10d%n", rating, frequency[rating]);
+//
 
         //draw bar chart histogram
         for (int rating = 1; rating< frequency.length; rating++) {

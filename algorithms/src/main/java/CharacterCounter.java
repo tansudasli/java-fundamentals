@@ -1,5 +1,3 @@
-package com.algorithms;
-
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -8,7 +6,7 @@ import java.util.Scanner;
  */
 public class CharacterCounter {
 
-    private static HashMap<Character, Integer> map = new HashMap();
+    private final static HashMap<Character, Integer> map = new HashMap<>();
 
     public static void main(String[] args) {
 

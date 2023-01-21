@@ -1,5 +1,3 @@
-package com.algorithms;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,7 +22,7 @@ public class Concordances {
         String path = "out/production/java fundamentals/com/core/example/algorithms/";
 
         try {
-            //count each occurrences
+            //count each occurrence
             Map<String, Long> wordsCount = Files.lines(Paths.get(path + "concordances.txt"))
                                                 .flatMap(Pattern.compile("\\W+")::splitAsStream)
                                                 .collect(Collectors.groupingBy(String::toLowerCase, TreeMap::new, Collectors.counting()));
