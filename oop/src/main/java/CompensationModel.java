@@ -1,6 +1,3 @@
-package com.oop;
-
-
 public interface CompensationModel {
 
     default double earnings() {

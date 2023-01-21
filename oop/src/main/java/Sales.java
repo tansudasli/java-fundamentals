@@ -1,10 +1,8 @@
-package com.oop;
-
 public class Sales extends Employee {
 
 
     private double grossSales;
-    private double commissionRate;
+    private final double commissionRate;
 
 
     public Sales(String name, double salary, int day, int month, int year, double grossSales, double commissionRate)  {

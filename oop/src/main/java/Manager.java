@@ -1,5 +1,3 @@
-package com.oop;
-
 /* Extends Employee class for some additional fields and functions...
 * */
 public class Manager extends Employee {

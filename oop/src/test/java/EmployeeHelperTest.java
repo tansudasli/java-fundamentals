@@ -1,6 +1,4 @@
-package com.oop;
-
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +9,7 @@ class EmployeeHelperTest {
     @ValueSource(strings = {"2 Maple Trail", "23860 Lillian Parkway", "052 Calypso Way", "479 Becker Pass", "2 Dunning Place Hill", "9 8th Terrace"})
     void validateStreet(String street) {
 
-        assertTrue( EmployeeHelper.validateStreet(street));
+        Assertions.assertTrue( EmployeeHelper.validateStreet(street));
 
     }
 

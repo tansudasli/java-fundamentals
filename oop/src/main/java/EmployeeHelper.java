@@ -1,5 +1,3 @@
-package com.oop;
-
 public interface EmployeeHelper {
 
 
