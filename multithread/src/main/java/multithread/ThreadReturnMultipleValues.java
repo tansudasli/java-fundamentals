@@ -1,9 +1,7 @@
-package com.multithread;
+package multithread;
 
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.function.Function;
-
 
 
 public class ThreadReturnMultipleValues {

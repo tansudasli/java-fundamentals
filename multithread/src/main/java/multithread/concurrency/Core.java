@@ -1,4 +1,4 @@
-package com.multithread.concurrency;
+package multithread.concurrency;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;

@@ -1,4 +1,4 @@
-package com.multithread;
+package multithread;
 
 class Task1 extends Thread {
     @Override

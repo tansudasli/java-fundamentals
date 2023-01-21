@@ -1,4 +1,4 @@
-package com.multithread;
+package multithread;
 
 import java.math.BigInteger;
 import java.util.concurrent.*;
