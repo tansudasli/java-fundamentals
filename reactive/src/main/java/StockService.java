@@ -1,5 +1,3 @@
-package com.reactive;
-
 public interface StockService {
     static Stock fetch(String symbol) {
 

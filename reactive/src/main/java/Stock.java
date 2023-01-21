@@ -1,5 +1,3 @@
-package com.reactive;
-
 public class Stock {
 
     private String name;

@@ -41,8 +41,6 @@ dependencies {
      */
 //    implementation project(':core')
 
-    //    src/main folder related libs
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
 
     //  src/test folder related libs
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'

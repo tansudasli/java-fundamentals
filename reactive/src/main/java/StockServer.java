@@ -1,5 +1,3 @@
-package com.reactive;
-
 import io.reactivex.rxjava3.core.*;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
