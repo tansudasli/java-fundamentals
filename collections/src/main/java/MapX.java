@@ -1,5 +1,3 @@
-package com.collections;
-
 import java.util.*;
 
 import static java.util.Arrays.stream;

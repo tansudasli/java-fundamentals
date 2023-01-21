@@ -3,4 +3,5 @@ include 'algorithms'
 include 'fp'
 include 'oop'
 include 'generics'
+include 'collections'
 
