@@ -1,5 +1,3 @@
-package com.generics;
-
 import java.util.Arrays;
 import java.util.function.IntFunction;
 

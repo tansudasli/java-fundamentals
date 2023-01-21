@@ -1,5 +1,3 @@
-package com.generics;
-
 import java.util.List;
 
 /**
