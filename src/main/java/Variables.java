@@ -1,11 +1,17 @@
-/*
-* Variables in Java.
-* */
+
 public class Variables {
 
-    public static final double CM_PER_INCH = 2.54;
+    public static final double CM_TO_INCH = 2.54;  //more appropriate as defined static.
+                                                   // because it is final, not changeable
 
-    enum Size {XS, S, M, L, XL, XXL}
+    public static int castToInt (double v) {
+        return (int) v;
+    }
+    public static long roundToLong(double v) {
+        return Math.round(v);
+    }
+
+    public enum SIZE {XS, S, M, L, XL, XXL}
 
     // public static void functionX (String s, Object...args) { }
 
@@ -22,30 +28,6 @@ public class Variables {
 
     public static void main(String[] args) {
 
-        char pi = '\u03C0'; //not use char anymore due to UTF.
-
-        System.out.println(pi);
-
-        //appropriate usages
-        long earthPopulation;
-        boolean done;
-        int vacationDays;
-        double salary = 65000.00;
-
-        //use final for constant values
-        final double CM_PER_INCH = 2.54; //more appropriate as defined static. cause it is final, not changeable
-        double paperWidth = 8.5;
-
-        double x = 4;
-        System.out.println("square of 4 = " + Math.sqrt(x));
-        System.out.println("power of 4^2 = " + Math.pow(x,2));
-
-
-        double z = 9.997;
-        int zz = (int) z; //9
-        int zzz = (int) Math.round(z); //10
-        System.out.println("casting a double 9.997 to int = " + zz);
-        System.out.println("casting a double 9.997 after round to int = " + zzz);
 
 
         /* operators
@@ -55,9 +37,6 @@ public class Variables {
         *
         * */
 
-        //enum
-        Size xx = Size.S;
-        System.out.println(xx);
 
         /* no built-in string type in Java.
         *  use String (sequences of Unicode characters
