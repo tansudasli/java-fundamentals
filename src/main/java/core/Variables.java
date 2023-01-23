@@ -1,3 +1,4 @@
+package core;
 
 public class Variables {
 
@@ -25,6 +26,9 @@ public class Variables {
         return max;
     }
 
+    public static String greeting() {
+        return "The fox was already in your chicken house.";
+    }
 
     public static void main(String[] args) {
 
@@ -38,54 +42,10 @@ public class Variables {
         * */
 
 
-        /* no built-in string type in Java.
-        *  use String (sequences of Unicode characters
-        *  each quoted string is instance of String class
-        *  */
-        String greeting = "Hello, Tansu dasli. What's up";
-        System.out.println("first 3 chars of greetings = " + greeting.substring(0,3));
-        System.out.println("first char of greetings = " + greeting.charAt(0));
-        System.out.println("unicode point of greetings = " + greeting.codePointAt(0));
-
-        /* handling strings as an array....
-
-        * int[] codePoints = greeting.codePoints().toArray();
-        * String greetings = new String(codePoints, 0, codePoints.length);
-        *
-        * */
 
 
 
-        /*
-        * use String.equals() , not == operator for string equality
-        *
-        * str == null
-        * str.length() == 0
-        *
-        * str != null && str.length() != 0  , check null first :)
-        *
-        * */
 
-        /* comparison
-        *
-        * str.compareTo(String other) , -1 (less),0 (equal),+1 (greater)
-        * String.equals() , not == operator for string content equality
-        *
-        * */
-
-        /* search
-         *
-         * String.startsWith("prefix"), true,false
-         * String.endsWith("suffix"), true, false
-         *
-         * String.indexOf(String str), indexFound or -1 if not occurs
-         *
-         * String.replace(CharSequence oldString, newString)
-         *
-         * String.substring(beginIndex, endIndex), returns a new string
-         *
-         * String join(CharSequence delimiter, CharSequence..elements), puts a delimiter between all elements
-         * */
 
         /* String concatenation operator is +.
          * But much performer way is StringBuilder. Single thread ops.

@@ -2,6 +2,7 @@ plugins {
     id 'java'   //java, java-library, application
 //    id 'application' //adds the run task. also add Application {main-class}
 //    id 'java-library' //adds the api command!
+    id "me.champeau.jmh" version "0.6.7"   //jmh benchmarking plugin
 }
 
 //group 'org.example'
@@ -44,7 +45,21 @@ dependencies {
 
     //  src/test folder related libs
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+    testImplementation 'org.openjdk.jmh:jmh-core:1.35'
+    testImplementation 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
 
+    //src.jmh folder.. package names must be same!
+    jmh 'org.openjdk.jmh:jmh-core:1.35'
+    jmh 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
+
+}
+
+//java micro benchmarks
+jmh {
+    warmupIterations = 1
+    iterations = 1
+    fork = 1
+    includeTests = true
 }
 
 //test is already registered task. so you can inject like below!
