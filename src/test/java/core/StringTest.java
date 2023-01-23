@@ -161,4 +161,9 @@ public class StringTest {
         return s.toString();
     }
 
+//    + operator is x1.2 slower than builder
+//    Benchmark                            Mode  Cnt  Score   Error  Units
+//    StringTest.concatWithBuilderStrings  avgt   20  0.086 ± 0.012  us/op
+//    StringTest.concatWithPlusStrings     avgt   20  0.107 ± 0.015  us/op
+
 }
