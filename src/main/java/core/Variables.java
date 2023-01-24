@@ -43,21 +43,6 @@ public class Variables {
 
 
 
-
-
-
-
-        /* String concatenation operator is +.
-         * But much performer way is StringBuilder. Single thread ops.
-         *
-         * StringBuilder builder = new StringBuilder();
-         * builder.append(str);
-         * completedString = builder.toString(); , when you done building..
-         *
-         * */
-        String join = String.join("/","A","B","C","D");
-        System.out.println("joined of = " + join);
-
         /* formatting
         *  If a class implements Formattable interface, formatTo() function executed otherwise toString() func. executed to turn an object into string!
         *

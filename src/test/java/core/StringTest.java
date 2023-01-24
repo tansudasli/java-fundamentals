@@ -7,9 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openjdk.jmh.annotations.*;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -106,19 +104,28 @@ public class StringTest {
         Assertions.assertEquals(n, Variables.greeting().replace(o, n).substring(0, 4));
     }
 
-    /* String concatenation operator is +.
-     * But much performer way is StringBuilder. Single thread ops.
+    /* concatenation
+     * String concatenation operator is +.
      *
-     * StringBuilder builder = new StringBuilder();
-     * builder.append(str);
-     * completedString = builder.toString(); , when you done building..
+     * But, StringBuilder is much better. And, It is Single thread ops. (not synchronized)
+     * If you need tread safe, then use StringBuffer !!
      *
      * */
-    @ParameterizedTest
-    @ValueSource(strings = {"The"})
-    void joinString(String c) {
-
-        Assertions.assertEquals(Variables.greeting().substring(0, 3), String.join("", c));
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @Fork(2)
+    @Measurement(iterations = 10, time = 1)
+    @Warmup(iterations = 1, time = 1)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    public static String joinString() {
+        return java.lang.String.join(" ", "The",
+                "fox",
+                "was",
+                "already",
+                "in",
+                "your",
+                "chicken",
+                "house.");
     }
 
     @Benchmark
@@ -128,7 +135,7 @@ public class StringTest {
     @Warmup(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithPlusStrings() {
-        String s = "The";
+        String s = "The ";
         s += "fox ";
         s += "was ";
         s += "already ";
@@ -149,7 +156,7 @@ public class StringTest {
     public static String concatWithBuilderStrings() {
 
         StringBuilder s = new StringBuilder();
-        s.append("The");
+        s.append("The ");
         s.append("fox ");
         s.append("was ");
         s.append("already ");
@@ -163,7 +170,16 @@ public class StringTest {
 
 //    + operator is x1.2 slower than builder
 //    Benchmark                            Mode  Cnt  Score   Error  Units
-//    StringTest.concatWithBuilderStrings  avgt   20  0.086 ± 0.012  us/op
-//    StringTest.concatWithPlusStrings     avgt   20  0.107 ± 0.015  us/op
+//    StringTest.concatWithBuilderStrings  avgt   20  0.048 ± 0.010  us/op
+//    StringTest.concatWithPlusStrings     avgt   20  0.062 ± 0.008  us/op
+//    StringTest.joinString                avgt   20  0.174 ± 0.003  us/op
+
+    @ParameterizedTest
+    @ValueSource(strings = "The fox was already in your chicken house.")
+    void testConcatenations(String v) {
+        assertEquals(v, StringTest.joinString());
+        assertEquals(v, StringTest.concatWithPlusStrings());
+        assertEquals(v, StringTest.concatWithBuilderStrings());
+    }
 
 }
