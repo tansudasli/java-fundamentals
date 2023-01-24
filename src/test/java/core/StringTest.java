@@ -1,13 +1,15 @@
 package core;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openjdk.jmh.annotations.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -108,8 +110,7 @@ public class StringTest {
      * String concatenation operator is +.
      *
      * But, StringBuilder is much better. And, It is Single thread ops. (not synchronized)
-     * If you need tread safe, then use StringBuffer !!
-     *
+     * If you need tread safe, then use StringBuffer !
      * */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
@@ -134,7 +135,25 @@ public class StringTest {
     @Measurement(iterations = 10, time = 1)
     @Warmup(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String concatWithPlusStrings() {
+    public static String concatWithConcat() {
+        String s = "The ";
+        return s.concat("fox ")
+                .concat("was ")
+                .concat("already ")
+                .concat("in ")
+                .concat("your ")
+                .concat("chicken ")
+                .concat("house.");
+
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @Fork(2)
+    @Measurement(iterations = 10, time = 1)
+    @Warmup(iterations = 1, time = 1)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    public static String concatWithPlusOperator() {
         String s = "The ";
         s += "fox ";
         s += "was ";
@@ -153,7 +172,7 @@ public class StringTest {
     @Measurement(iterations = 10, time = 1)
     @Warmup(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String concatWithBuilderStrings() {
+    public static String concatWithBuilder() {
 
         StringBuilder s = new StringBuilder();
         s.append("The ");
@@ -168,18 +187,48 @@ public class StringTest {
         return s.toString();
     }
 
+
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @Fork(2)
+    @Measurement(iterations = 10, time = 1)
+    @Warmup(iterations = 1, time = 1)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    public static String concatWithStream() {
+        List<String> l = Arrays.asList("The ", "fox ", "was ", "already ", "in ", "your ", "chicken ", "house.");
+
+        return l.stream().collect(Collectors.joining());
+    }
+
 //    + operator is x1.2 slower than builder
+//    So. 4 ways to concatenate
+//
 //    Benchmark                            Mode  Cnt  Score   Error  Units
-//    StringTest.concatWithBuilderStrings  avgt   20  0.048 ± 0.010  us/op
-//    StringTest.concatWithPlusStrings     avgt   20  0.062 ± 0.008  us/op
-//    StringTest.joinString                avgt   20  0.174 ± 0.003  us/op
+//    StringTest.concatWithBuilder       avgt   20  0.045 ± 0.004  us/op
+//    StringTest.concatWithConcat        avgt   20  0.058 ± 0.003  us/op
+//    StringTest.concatWithPlusOperator  avgt   20  0.060 ± 0.005  us/op
+//    StringTest.concatWithStream        avgt   20  0.233 ± 0.017  us/op
+//    StringTest.joinString              avgt   20  0.195 ± 0.023  us/op
+
+
+
 
     @ParameterizedTest
     @ValueSource(strings = "The fox was already in your chicken house.")
     void testConcatenations(String v) {
         assertEquals(v, StringTest.joinString());
-        assertEquals(v, StringTest.concatWithPlusStrings());
-        assertEquals(v, StringTest.concatWithBuilderStrings());
+        assertEquals(v, StringTest.concatWithConcat());
+        assertEquals(v, StringTest.concatWithPlusOperator());
+        assertEquals(v, StringTest.concatWithBuilder());
+        assertEquals(v, StringTest.concatWithStream());
     }
+
+    /* formatting
+     *  If a class implements Formattable interface, formatTo() function executed otherwise toString() func. executed to turn an object into string!
+     *
+     *  String.format() can also be used, without printing it.
+     *  String.format("Hello %s", name);
+     *
+     * */
 
 }
