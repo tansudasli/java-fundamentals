@@ -48,14 +48,13 @@ public class Variables {
     }
 
     public static int[] ints(boolean initialized) {
-
-        //default initialize
         return initialized ? new int[] {3, 5} : intsData();
     }
 
     private static int[] intsData() {
 
         return IntStream.rangeClosed(0, 100)
+                .map(x -> x * x)
                 .toArray();
     }
 

@@ -12,7 +12,7 @@ public class ArrayTest {
 
     @ParameterizedTest
     @DisplayName("Test max of int[]")
-    @CsvSource({"true, 5", "false, 100"})
+    @CsvSource({"true, 5", "false, 10000"})
     public void testMaxOfInts(boolean initialized, int max) {
 
         //IntStream
