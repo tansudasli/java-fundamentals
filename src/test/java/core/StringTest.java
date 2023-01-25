@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StringTest {
 
@@ -100,11 +99,17 @@ public class StringTest {
         Assertions.assertEquals(4, Variables.greeting().indexOf(v));  //index found or -1
     }
 
+    //todo: search with regex !
+
     @ParameterizedTest
     @CsvSource({"The, This"})
     void replaceString(String o, String n) {
         Assertions.assertEquals(n, Variables.greeting().replace(o, n).substring(0, 4));
     }
+
+    //todo: consider src/jmh/java/core for all benchmarks !!
+    //todo: consider injecting (Benchmark bh) to methods and bh.consume(...)
+
 
     /* concatenation
      * String concatenation operator is +.
@@ -115,10 +120,12 @@ public class StringTest {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @Fork(2)
-    @Measurement(iterations = 10, time = 1)
+    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String joinString() {
+
+
         return java.lang.String.join(" ", "The",
                 "fox",
                 "was",
@@ -130,27 +137,9 @@ public class StringTest {
     }
 
     @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
+    @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
-    @Measurement(iterations = 10, time = 1)
-    @Warmup(iterations = 1, time = 1)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String concatWithConcat() {
-        String s = "The ";
-        return s.concat("fox ")
-                .concat("was ")
-                .concat("already ")
-                .concat("in ")
-                .concat("your ")
-                .concat("chicken ")
-                .concat("house.");
-
-    }
-
-    @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
-    @Fork(2)
-    @Measurement(iterations = 10, time = 1)
+    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithPlusOperator() {
@@ -169,7 +158,25 @@ public class StringTest {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @Fork(2)
-    @Measurement(iterations = 10, time = 1)
+    @Measurement(iterations = 2, time = 1)
+    @Warmup(iterations = 1, time = 1)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    public static String concatWithConcat() {
+        String s = "The ";
+        return s.concat("fox ")
+                .concat("was ")
+                .concat("already ")
+                .concat("in ")
+                .concat("your ")
+                .concat("chicken ")
+                .concat("house.");
+
+    }
+
+    @Benchmark
+    @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
+    @Fork(2)
+    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithBuilder() {
@@ -187,11 +194,30 @@ public class StringTest {
         return s.toString();
     }
 
-
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @Fork(2)
-    @Measurement(iterations = 10, time = 1)
+    @Measurement(iterations = 2, time = 1)
+    @Warmup(iterations = 1, time = 1)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    public static String concatWithBuffer() {
+            StringBuffer b = new StringBuffer();
+            b.append("The ");
+            b.append("fox ");
+            b.append("was ");
+            b.append("already ");
+            b.append("in ");
+            b.append("your ");
+            b.append("chicken ");
+            b.append("house.");
+
+            return b.toString();
+    }
+
+    @Benchmark
+    @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
+    @Fork(2)
+    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithStream() {
@@ -203,13 +229,16 @@ public class StringTest {
 //    + operator is x1.2 slower than builder
 //    So. 4 ways to concatenate
 //
-//    Benchmark                            Mode  Cnt  Score   Error  Units
-//    StringTest.concatWithBuilder       avgt   20  0.045 ± 0.004  us/op
-//    StringTest.concatWithConcat        avgt   20  0.058 ± 0.003  us/op
-//    StringTest.concatWithPlusOperator  avgt   20  0.060 ± 0.005  us/op
-//    StringTest.concatWithStream        avgt   20  0.233 ± 0.017  us/op
-//    StringTest.joinString              avgt   20  0.195 ± 0.023  us/op
-
+//    Benchmark                           Mode  Cnt   Score    Error   Units
+//    StringTest.concatWithBuilder       thrpt    4  14.122 ± 62.475  ops/us
+//    StringTest.concatWithPlusOperator  thrpt    4  14.585 ± 17.941  ops/us
+//    StringTest.concatWithStream        thrpt    4   3.697 ±  2.707  ops/us
+//    StringTest.concatWithBuffer         avgt    4   0.074 ±  0.152   us/op
+//    StringTest.concatWithBuilder        avgt    4   0.047 ±  0.021   us/op
+//    StringTest.concatWithConcat         avgt    4   0.059 ±  0.017   us/op
+//    StringTest.concatWithPlusOperator   avgt    4   0.057 ±  0.009   us/op
+//    StringTest.concatWithStream         avgt    4   0.212 ±  0.077   us/op
+//    StringTest.joinString               avgt    4   0.175 ±  0.014   us/op
 
 
 
@@ -221,10 +250,12 @@ public class StringTest {
         assertEquals(v, StringTest.concatWithPlusOperator());
         assertEquals(v, StringTest.concatWithBuilder());
         assertEquals(v, StringTest.concatWithStream());
+        assertEquals(v, StringTest.concatWithBuffer());
     }
 
     /* formatting
-     *  If a class implements Formattable interface, formatTo() function executed otherwise toString() func. executed to turn an object into string!
+     *  If a class implements Formattable interface, formatTo() function executed otherwise
+     *  toString() func. executed to turn an object into string!
      *
      *  String.format() can also be used, without printing it.
      *  String.format("Hello %s", name);
