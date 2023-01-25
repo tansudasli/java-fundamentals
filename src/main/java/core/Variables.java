@@ -1,11 +1,7 @@
 package core;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Variables {
 
@@ -56,7 +52,6 @@ public class Variables {
     }
 
     public static String[] strings(boolean initialized) {
-
         return initialized ? new String[] {"The ", "fox ", "was ", "already ","in ", "your ", "chicken ", "house."}
                            : stringsDataGenerator();
 
@@ -100,16 +95,6 @@ public class Variables {
         * */
 
 
-
-
-
-
-        /* Array
-        *
-        * int[] i = new int[100];
-        *
-        * i.length
-        * */
 
         /*
         * for (variable : collection) statement
