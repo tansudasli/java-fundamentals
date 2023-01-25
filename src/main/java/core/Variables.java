@@ -1,5 +1,7 @@
 package core;
 
+import java.math.BigInteger;
+
 public class Variables {
 
     public static final double CM_TO_INCH = 2.54;  //more appropriate as defined static.
@@ -16,7 +18,7 @@ public class Variables {
 
     // public static void functionX (String s, Object...args) { }
 
-    public static double max (double...args) {
+    public static double max(double...args) {
         double max = 0;
 
         for (double v : args)
@@ -26,10 +28,22 @@ public class Variables {
         return max;
     }
 
+    /* concatenation.
+       Use + for small number of concatenation. But, String.concat is better...
+       in a Loop or more ops., use StringBuilder or StringBuffer
+     */
     public static String greeting() {
         return "The fox was already in your chicken house.";
     }
 
+    public static BigInteger addPrecise(BigInteger ...args) {
+        BigInteger result = BigInteger.ZERO;
+
+        for (BigInteger v : args)
+            result = result.add(v);
+
+        return result;
+    }
     public static void main(String[] args) {
 
 
@@ -43,13 +57,7 @@ public class Variables {
 
 
 
-        /* formatting
-        *  If a class implements Formattable interface, formatTo() function executed otherwise toString() func. executed to turn an object into string!
-        *
-        *  String.format() can also be used, without printing it.
-        *  String.format("Hello %s", name);
-        *
-        * */
+
 
         /* for more precision
         *
