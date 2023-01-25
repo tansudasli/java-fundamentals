@@ -1,6 +1,7 @@
 package core;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -261,5 +262,11 @@ public class StringTest {
      *  String.format("Hello %s", name);
      *
      * */
+
+    @ParameterizedTest
+    @ValueSource(strings = {"You"})
+    void testGeneratedStrings(String e) {
+       assertEquals(e, Variables.stringsDataGenerator()[12]);
+    }
 
 }

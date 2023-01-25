@@ -41,6 +41,7 @@ dependencies {
      * but, java commands, use -cp to add core project jar!!
      */
 //    implementation project(':core')
+    implementation 'org.apache.commons:commons-configuration2:2.8.0'
 
 
     //  src/test folder related libs

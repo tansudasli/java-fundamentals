@@ -1,7 +1,11 @@
 package core;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Variables {
 
@@ -48,14 +52,40 @@ public class Variables {
     }
 
     public static int[] ints(boolean initialized) {
-        return initialized ? new int[] {3, 5} : intsData();
+        return initialized ? new int[] {3, 5} : intsDataGenerator();
     }
 
-    private static int[] intsData() {
+    public static String[] strings(boolean initialized) {
+
+        return initialized ? new String[] {"The ", "fox ", "was ", "already ","in ", "your ", "chicken ", "house."}
+                           : stringsDataGenerator();
+
+    }
+
+    private static int[] intsDataGenerator() {
 
         return IntStream.rangeClosed(0, 100)
                 .map(x -> x * x)
                 .toArray();
+    }
+    public static String[] stringsDataGenerator() {
+
+        return """
+        It is an evil sign too see a fox lick a lamb.
+        You can have no more of the fox than the skin.
+        The fox knew too much, that's how he lost his tail.
+        The hounds lost the scent of the fox.
+        The quick brown fox jumps over a lazy dog.
+        He's a cunning old fox.
+        A fox may grow gray, but never good.
+        He's a cunning/sly/wily old fox.
+        He is cunning as a fox.
+        The huntsmen rode fast, chasing after the fox.
+        He sets the fox to keep the geese.
+        He's a sly old fox.
+        He was as cunning as a fox.
+        It is a blind silly goose that comes to the fox’s sermon
+        """.split("\\W+");
     }
 
     public static void main(String[] args) {
