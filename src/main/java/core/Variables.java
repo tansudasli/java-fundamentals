@@ -1,6 +1,7 @@
 package core;
 
 import java.math.BigInteger;
+import java.util.stream.IntStream;
 
 public class Variables {
 
@@ -36,6 +37,7 @@ public class Variables {
         return "The fox was already in your chicken house.";
     }
 
+    // for more precision, BigInteger...
     public static BigInteger addPrecise(BigInteger ...args) {
         BigInteger result = BigInteger.ZERO;
 
@@ -44,6 +46,19 @@ public class Variables {
 
         return result;
     }
+
+    public static int[] ints(boolean initialized) {
+
+        //default initialize
+        return initialized ? new int[] {3, 5} : intsData();
+    }
+
+    private static int[] intsData() {
+
+        return IntStream.rangeClosed(0, 100)
+                .toArray();
+    }
+
     public static void main(String[] args) {
 
 
@@ -59,12 +74,6 @@ public class Variables {
 
 
 
-        /* for more precision
-        *
-        * BigInteger a = BigInteger.valueOf(100);
-        *
-        * a.add(b); not a+b !!!
-        * */
 
         /* Array
         *
