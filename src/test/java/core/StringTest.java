@@ -1,7 +1,6 @@
 package core;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -119,29 +118,10 @@ public class StringTest {
      * If you need tread safe, then use StringBuffer !
      * */
     @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
-    @Fork(2)
-    @Measurement(iterations = 2, time = 1)
-    @Warmup(iterations = 1, time = 1)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String joinString() {
-
-
-        return java.lang.String.join(" ", "The",
-                "fox",
-                "was",
-                "already",
-                "in",
-                "your",
-                "chicken",
-                "house.");
-    }
-
-    @Benchmark
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
-    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
+    @Measurement(iterations = 2, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithPlusOperator() {
         String s = "The ";
@@ -159,8 +139,27 @@ public class StringTest {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @Fork(2)
-    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
+    @Measurement(iterations = 2, time = 1)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    public static String joinString() {
+
+
+        return java.lang.String.join(" ", "The",
+                "fox",
+                "was",
+                "already",
+                "in",
+                "your",
+                "chicken",
+                "house.");
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @Fork(2)
+    @Warmup(iterations = 1, time = 1)
+    @Measurement(iterations = 2, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithConcat() {
         String s = "The ";
@@ -177,8 +176,8 @@ public class StringTest {
     @Benchmark
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
-    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
+    @Measurement(iterations = 2, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithBuilder() {
 
@@ -198,11 +197,12 @@ public class StringTest {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @Fork(2)
-    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
+    @Measurement(iterations = 2, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithBuffer() {
             StringBuffer b = new StringBuffer();
+
             b.append("The ");
             b.append("fox ");
             b.append("was ");
@@ -218,8 +218,8 @@ public class StringTest {
     @Benchmark
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
-    @Measurement(iterations = 2, time = 1)
     @Warmup(iterations = 1, time = 1)
+    @Measurement(iterations = 2, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static String concatWithStream() {
         List<String> l = Arrays.asList("The ", "fox ", "was ", "already ", "in ", "your ", "chicken ", "house.");
