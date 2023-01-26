@@ -57,7 +57,7 @@ public class Variables {
 
     }
 
-    private static int[] intsDataGenerator() {
+    public static int[] intsDataGenerator() {
 
         return IntStream.rangeClosed(0, 100)
                 .map(x -> x * x)
@@ -81,6 +81,8 @@ public class Variables {
         He was as cunning as a fox.
         It is a blind silly goose that comes to the fox’s sermon
         """.split("\\W+");
+
+        //todo: get stream and replace s -> is, then return them all
     }
 
     public static void main(String[] args) {
