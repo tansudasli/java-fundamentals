@@ -4,11 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openjdk.jmh.annotations.*;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,22 +18,27 @@ public class StringTest {
      * each quoted string is instance of String class
      **/
 
+    public static Supplier<String> shortText = () ->
+            """
+            The fox was already in your chicken house.
+            """;
+
     @ParameterizedTest
     @ValueSource(strings = {"the"})
     void testFirstThreeChars(String v) {
 
-        Assertions.assertEquals(v, Variables.greeting().substring(0, 3).toLowerCase());
+        Assertions.assertEquals(v, shortText.get().substring(0, 3).toLowerCase());
     }
     @ParameterizedTest
     @ValueSource(chars = {'t'})
     void testFirstChar(Character v) {
 
-//        core.Variables.greeting()
+//        core.shortText.get()
 //                .codePoints()
 //                .map()
-//        System.out.println(Character.toChars( core.Variables.greeting().chars().findFirst().orElse(0)));
-//        core.Variables.greeting().chars().limit(3).mapToObj(Character::toChars).forEach(System.out::println);
-        Assertions.assertEquals(v, Character.toLowerCase(Variables.greeting().charAt(0)));
+//        System.out.println(Character.toChars( core.shortText.get().chars().findFirst().orElse(0)));
+//        core.shortText.get().chars().limit(3).mapToObj(Character::toChars).forEach(System.out::println);
+        Assertions.assertEquals(v, Character.toLowerCase(shortText.get().charAt(0)));
 
     }
 
@@ -53,10 +56,10 @@ public class StringTest {
     //greetings == The fox was already in your chicken house.
     void checkStrings(String v) {
 
-        Assertions.assertEquals(v, Variables.greeting());
+        Assertions.assertEquals(v, shortText.get());
 
-        System.out.println(v == Variables.greeting());          //pointer check!
-        System.out.println(v.compareTo(Variables.greeting()));  //-1, 0== equal, 1 greater
+        System.out.println(v == shortText.get());          //pointer check!
+        System.out.println(v.compareTo(shortText.get()));  //-1, 0== equal, 1 greater
     }
 
     /* comparison
@@ -68,7 +71,7 @@ public class StringTest {
     @ParameterizedTest
     @ValueSource(strings = {"The fox was already in your chicken house."})
     void compareStrings(String v) {
-        assertEquals(0, v.compareTo(Variables.greeting()));
+        assertEquals(0, v.compareTo(shortText.get()));
     }
 
     /* search
@@ -88,15 +91,15 @@ public class StringTest {
     @ParameterizedTest
     @ValueSource(strings = {"The"})
     void searchThe(String v) {
-        Assertions.assertTrue(Variables.greeting().startsWith(v));
+        Assertions.assertTrue(shortText.get().startsWith(v));
     }
 
     @ParameterizedTest
     @ValueSource(strings = "fox")
     void searchFox(String v) {
-//        assertTrue(core.Variables.greeting().indexOf(v) > 0);
+//        assertTrue(core.shortText.get().indexOf(v) > 0);
 
-        Assertions.assertEquals(4, Variables.greeting().indexOf(v));  //index found or -1
+        Assertions.assertEquals(4, shortText.get().indexOf(v));  //index found or -1
     }
 
     //todo: search with regex !
@@ -104,154 +107,32 @@ public class StringTest {
     @ParameterizedTest
     @CsvSource({"The, This"})
     void replaceString(String o, String n) {
-        Assertions.assertEquals(n, Variables.greeting().replace(o, n).substring(0, 4));
+        Assertions.assertEquals(n, shortText.get().replace(o, n).substring(0, 4));
     }
 
     //todo: consider src/jmh/java/core for all benchmarks !!
-    //todo: consider injecting (Benchmark bh) to methods and bh.consume(...)
 
 
-    /* concatenation
-     * String concatenation operator is +.
-     *
-     * But, StringBuilder is much better. And, It is Single thread ops. (not synchronized)
-     * If you need tread safe, then use StringBuffer !
-     * */
-    @Benchmark
-    @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
-    @Fork(2)
-    @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String concatWithPlusOperator() {
-        String s = "The ";
-        s += "fox ";
-        s += "was ";
-        s += "already ";
-        s += "in ";
-        s += "your ";
-        s += "chicken ";
-        s += "house.";
 
-        return s;
-    }
-
-    @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
-    @Fork(2)
-    @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String joinString() {
-
-
-        return java.lang.String.join(" ", "The",
-                "fox",
-                "was",
-                "already",
-                "in",
-                "your",
-                "chicken",
-                "house.");
-    }
-
-    @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
-    @Fork(2)
-    @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String concatWithConcat() {
-        String s = "The ";
-        return s.concat("fox ")
-                .concat("was ")
-                .concat("already ")
-                .concat("in ")
-                .concat("your ")
-                .concat("chicken ")
-                .concat("house.");
-
-    }
-
-    @Benchmark
-    @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
-    @Fork(2)
-    @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String concatWithBuilder() {
-
-        StringBuilder s = new StringBuilder();
-        s.append("The ");
-        s.append("fox ");
-        s.append("was ");
-        s.append("already ");
-        s.append("in ");
-        s.append("your ");
-        s.append("chicken ");
-        s.append("house.");
-
-        return s.toString();
-    }
-
-    @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
-    @Fork(2)
-    @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String concatWithBuffer() {
-            StringBuffer b = new StringBuffer();
-
-            b.append("The ");
-            b.append("fox ");
-            b.append("was ");
-            b.append("already ");
-            b.append("in ");
-            b.append("your ");
-            b.append("chicken ");
-            b.append("house.");
-
-            return b.toString();
-    }
-
-    @Benchmark
-    @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
-    @Fork(2)
-    @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public static String concatWithStream() {
-        List<String> l = Arrays.asList("The ", "fox ", "was ", "already ", "in ", "your ", "chicken ", "house.");
-
-        return l.stream().collect(Collectors.joining());
-    }
-
-//    + operator is x1.2 slower than builder
-//    So. 4 ways to concatenate
-//
-//    Benchmark                           Mode  Cnt   Score    Error   Units
-//    StringTest.concatWithBuilder       thrpt    4  14.122 ± 62.475  ops/us
-//    StringTest.concatWithPlusOperator  thrpt    4  14.585 ± 17.941  ops/us
-//    StringTest.concatWithStream        thrpt    4   3.697 ±  2.707  ops/us
-//    StringTest.concatWithBuffer         avgt    4   0.074 ±  0.152   us/op
-//    StringTest.concatWithBuilder        avgt    4   0.047 ±  0.021   us/op
-//    StringTest.concatWithConcat         avgt    4   0.059 ±  0.017   us/op
-//    StringTest.concatWithPlusOperator   avgt    4   0.057 ±  0.009   us/op
-//    StringTest.concatWithStream         avgt    4   0.212 ±  0.077   us/op
-//    StringTest.joinString               avgt    4   0.175 ±  0.014   us/op
-
-
+    public static Supplier<String> concatWithPlusOperator = () -> "The " + "fox " + "was " + "already " + "in " + "your " + "chicken " + "house.";
+    public static Supplier<String> concatWithJoin = () -> String.join(" ", "The", "fox","was","already", "in", "your", "chicken", "house.");
+    public static Supplier<String> concatWithJoinStream = () -> Arrays.asList("The ", "fox ", "was ", "already ", "in ", "your ", "chicken ", "house.")
+            .stream()
+            .collect(Collectors.joining());
+    public static Supplier<String> concatWithConcat = () -> "The ".concat("fox ").concat("was ").concat("already ").concat("in ").concat("your ").concat("chicken ").concat("house.");
+    public static Supplier<String> concatWithBuilder = () -> new StringBuilder().append("The ").append("fox ").append("was ").append("already ").append("in ").append("your ").append("chicken ").append("house.").toString();
+    public static Supplier<String> concatWithBuffer = () -> new StringBuffer().append("The ").append("fox ").append("was ").append("already ").append("in ").append("your ").append("chicken ").append("house.").toString();
 
     @ParameterizedTest
     @ValueSource(strings = "The fox was already in your chicken house.")
     void testConcatenations(String v) {
-        assertEquals(v, StringTest.joinString());
-        assertEquals(v, StringTest.concatWithConcat());
-        assertEquals(v, StringTest.concatWithPlusOperator());
-        assertEquals(v, StringTest.concatWithBuilder());
-        assertEquals(v, StringTest.concatWithStream());
-        assertEquals(v, StringTest.concatWithBuffer());
+
+        assertEquals(v, StringTest.concatWithPlusOperator.get());
+        assertEquals(v, StringTest.concatWithConcat.get());
+        assertEquals(v, StringTest.concatWithJoin.get());
+        assertEquals(v, StringTest.concatWithJoinStream.get());
+        assertEquals(v, StringTest.concatWithBuilder.get());
+        assertEquals(v, StringTest.concatWithBuffer.get());
     }
 
     /* formatting
@@ -263,10 +144,6 @@ public class StringTest {
      *
      * */
 
-    @ParameterizedTest
-    @ValueSource(strings = {"You"})
-    void testGeneratedStrings(String e) {
-       assertEquals(e, Variables.stringsDataGenerator()[12]);
-    }
+
 
 }
