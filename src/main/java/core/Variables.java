@@ -4,28 +4,13 @@ package core;
 public class Variables {
 
 
-
-
-
-
-
-
-
     /* concatenation.
 
        Use + for small number of concatenation. But, String.concat is better...
        in a Loop or more ops., use StringBuilder or StringBuffer (threadsafe)
        StringBuilder perf is similar to StringBuffer.
      */
-//    public static String greeting() {
-//        return "The fox was already in your chicken house.";
-//    }
-
-
-
-
-
-
+    
 
     /*
        data generation

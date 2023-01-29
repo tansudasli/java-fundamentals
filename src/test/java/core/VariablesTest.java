@@ -25,11 +25,12 @@ interface maxInterface {
 
 }
 
+/**
+ * general variable concepts
+ */
 public class VariablesTest {
 
-
-
-    public static final double CM_TO_INCH = 2.54;  //more appropriate as defined static.
+    public static final double CM_TO_INCH = 2.54;  //if final, make it static :)
     public static Function<Double, Integer> castToInt = Double::intValue;
     public static Function<Double, Long> roundToLong = Math::round;
 
