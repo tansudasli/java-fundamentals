@@ -71,8 +71,8 @@ public class ArrayStringTest {
 
     public static BiFunction<Boolean, String, Long> frequencyOfRegex = (less, regex) -> {
         Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(less ? StringTest.shortText.get()
-                                   : StringTest.text.get());
+        Matcher m = p.matcher(less ? Arrays.toString(shortTextAsWords.get())
+                                   : Arrays.toString(words.apply(less)));
 
         long count = 0;
         while (m.find())
