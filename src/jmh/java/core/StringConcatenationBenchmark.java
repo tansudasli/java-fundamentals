@@ -44,7 +44,7 @@ public class StringConcatenationBenchmark {
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
     @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
+    @Measurement(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static void concatWithPlusOperator(Blackhole bh) {
         bh.consume(StringTest.concatWithPlusOperator.get());
@@ -54,7 +54,7 @@ public class StringConcatenationBenchmark {
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
     @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
+    @Measurement(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static void concatWithJoin(Blackhole bh) {
         bh.consume(StringTest.concatWithJoin.get());
@@ -64,7 +64,7 @@ public class StringConcatenationBenchmark {
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
     @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
+    @Measurement(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static void concatWithConcat(Blackhole bh) {
         bh.consume(StringTest.concatWithConcat.get());
@@ -74,7 +74,7 @@ public class StringConcatenationBenchmark {
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
     @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
+    @Measurement(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static void concatWithBuilder(Blackhole bh) {
         bh.consume(StringTest.concatWithBuilder);
@@ -84,7 +84,7 @@ public class StringConcatenationBenchmark {
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
     @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
+    @Measurement(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static void concatWithBuffer(Blackhole bh) {
         bh.consume(StringTest.concatWithBuffer);
@@ -94,17 +94,22 @@ public class StringConcatenationBenchmark {
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
     @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 2, time = 1)
+    @Measurement(iterations = 1, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public static void concatWithJoinStream(Blackhole bh) {
         bh.consume(StringTest.concatWithJoinStream.get());
     }
 
+    // java -cp build/libs/java-fundamentals-1.0-SNAPSHOT-jmh.jar core.StringConcatenationBenchmark
     public static void main(String[] args) throws Exception {
-//        org.openjdk.jmh.Main.main(args);
+
         var opt = new OptionsBuilder()
                 .include(core.StringConcatenationBenchmark.class.getName())
-                .forks(1)
+                .jvmArgs("-Xms1g", "-Xmx1g", "-XX:+UseG1GC")
+                .warmupForks(1)
+                .warmupIterations(1)
+                .measurementIterations(2)
+                .forks(3)
                 .build() ;
 
         new Runner(opt).run() ;
