@@ -156,7 +156,7 @@ public class StringTest {
     //todo: Statistical String ops. frequency
     @ParameterizedTest
     @CsvSource({"true, [f|F]ox, 1", "false, [f|F]ox, 38"})
-    void frequencyOfFoxInShortText(boolean isShort, String regex, int frequency) {
+    void frequencyOfFoxWithRegex(boolean isShort, String regex, int frequency) {
 
         var matcher = isShort ? Pattern.compile(regex).matcher(shortText.get())
                               : Pattern.compile(regex).matcher(text.get());
