@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -16,37 +17,35 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Uses text and shortText to get String[],
+ * Uses text and shortText to get String[] as words,
  * So that we can do some Array ops. at ArrayStringTest.java and benchmarks at ArrayBenchmark.java
  */
 public class ArrayStringTest {
 
 
     //get String[] from text and shortText fields.
-    public static Supplier<String[]> stringsGenerator = () -> StringTest.text.get().split("\\W+");
-    public static Supplier<String[]> stringsShortGenerator = () -> StringTest.shortText.get().split("\\W+");
-    public static Function<Boolean, String[]> strings = less -> less ? stringsShortGenerator.get()
-                                                                     : ArrayStringTest.stringsGenerator.get();
+    public static Supplier<String[]> textAsWords = () -> StringTest.text.get().split("\\W+");
+    public static Supplier<String[]> shortTextAsWords = () -> StringTest.shortText.get().split("\\W+");
+    public static Function<Boolean, String[]> words = less -> less ? shortTextAsWords.get()
+                                                                   : ArrayStringTest.textAsWords.get();
 
 
     @ParameterizedTest
-    @DisplayName("Test 1st of String[]")
+    @DisplayName("Test 1st word of String[]")
     @CsvSource({"true, the", "false, it"})
-    void testGeneratedStrings(Boolean less, String e) {
-        assertEquals(e, ArrayStringTest.strings.apply(less)[0]
-                .toLowerCase()
-                .trim());
+    void testFirstOfWords(Boolean less, String e) {
+        assertEquals(e, ArrayStringTest.words.apply(less)[0].toLowerCase().trim());
     }
 
     @ParameterizedTest
-    @DisplayName("Test length of String[]")
+    @DisplayName("Test count of String[]")
     @CsvSource({"true, 8", "false, 999"})
-    public void testLengthOfStrings(boolean less, int length) {
-        assertEquals(length, ArrayStringTest.strings.apply(less).length);
+    public void countOfWords(boolean less, int length) {
+        assertEquals(length, ArrayStringTest.words.apply(less).length);
     }
 
-    public static BiFunction<Boolean, String, Long> searchWithStream =
-            (less, target) -> Arrays.stream(ArrayStringTest.strings.apply(less))
+    public static BiFunction<Boolean, String, Long> frequencyOf =
+            (less, target) -> Arrays.stream(ArrayStringTest.words.apply(less))
                     .map(String::toLowerCase)
                     .map(String::trim)
                     .filter(s -> s.contains(target.toLowerCase()))
@@ -55,18 +54,25 @@ public class ArrayStringTest {
     @ParameterizedTest
     @DisplayName("Test frequency of 'fox' in String[]")
     @CsvSource({"true, fox, 1", "false, fox, 38"})
-    public void testFrequencyOfFox(boolean less, String target, long e) {
-        assertEquals(e, ArrayStringTest.searchWithStream.apply(less, target));
+    public void frequencyOfFox(boolean less, String target, long e) {
+        assertEquals(e, ArrayStringTest.frequencyOf.apply(less, target));
 
-        //Arrays.binarySearch( ArrayStringTest.strings.apply(false), "fox");
+        var x = Arrays.stream(words.apply(true))
+                      .map(String::toLowerCase)
+                      .sorted(Comparator.naturalOrder());
+
+//        x.forEach(System.out::println);
+
+        System.out.println(Arrays.binarySearch(x.toArray(),"fox"));
 
     }
-    //todo: search stream vs search w/ regex
+
     //todo: make it more clean below via extract function refactoring technique
 
-    public static BiFunction<Boolean, String, Long> searchWithRegex = (less, regex) -> {
+    public static BiFunction<Boolean, String, Long> frequencyOfRegex = (less, regex) -> {
         Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(less ? StringTest.shortText.get() : StringTest.text.get());
+        Matcher m = p.matcher(less ? StringTest.shortText.get()
+                                   : StringTest.text.get());
 
         long count = 0;
         while (m.find())
@@ -78,8 +84,8 @@ public class ArrayStringTest {
     @ParameterizedTest
     @DisplayName("Test frequency of 'fox' in String[]")
     @CsvSource({"true, [F|f]ox, 1", "false, [F|f]ox, 38"})
-    public void testFrequencyOfFoxWithRegex(boolean less, String regex, long e) {
-        assertEquals(e,  searchWithRegex.apply(less, regex));
+    public void frequencyOfFoxWithRegex(boolean less, String regex, long e) {
+        assertEquals(e,  frequencyOfRegex.apply(less, regex));
     }
 
     @ParameterizedTest
@@ -88,7 +94,7 @@ public class ArrayStringTest {
     public void shoutStrings(boolean less) {
 
         System.out.println(
-                Arrays.stream(ArrayStringTest.strings.apply(less))
+                Arrays.stream(ArrayStringTest.words.apply(less))
                         .limit(10)
                         .collect(Collectors.joining(" ")));
 

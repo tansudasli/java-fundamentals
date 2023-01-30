@@ -20,7 +20,7 @@ public class ArrayConcatenationBenchmark {
     @Measurement(iterations = 3)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void concatWithJoinStream(Blackhole bh) {
-        bh.consume(Arrays.stream(ArrayStringTest.stringsGenerator.get())
+        bh.consume(Arrays.stream(ArrayStringTest.textAsWords.get())
                 .collect(Collectors.joining(" ")));
     }
 
@@ -31,7 +31,7 @@ public class ArrayConcatenationBenchmark {
     @Measurement(iterations = 3)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void concatWithJoin(Blackhole bh) {
-        bh.consume(String.join(" ", ArrayStringTest.stringsGenerator.get()));
+        bh.consume(String.join(" ", ArrayStringTest.textAsWords.get()));
     }
 
     /** to run, via terminal

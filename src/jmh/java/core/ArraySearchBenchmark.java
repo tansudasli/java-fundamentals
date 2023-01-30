@@ -15,7 +15,7 @@ public class ArraySearchBenchmark {
     @Measurement(iterations = 2)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void searchWithStream(Blackhole bh) {
-       bh.consume(ArrayStringTest.searchWithStream.apply(false, "fox"));
+       bh.consume(ArrayStringTest.frequencyOf.apply(false, "fox"));
     }
 
     @Benchmark
@@ -25,7 +25,7 @@ public class ArraySearchBenchmark {
     @Measurement(iterations = 2)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void searchWithRegex(Blackhole bh) {
-        bh.consume(ArrayStringTest.searchWithRegex.apply(false, "[f|Fox]"));
+        bh.consume(ArrayStringTest.frequencyOfRegex.apply(false, "[f|Fox]"));
     }
 
     public static void main(String[] args) throws Exception {

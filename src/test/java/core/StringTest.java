@@ -1,10 +1,12 @@
 package core;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -72,18 +74,18 @@ public class StringTest {
     The fox was already in your chicken house.
     """.replaceAll("\n", "");
 
+    public static Function<Boolean, String> sentences = (less) -> less ? shortText.get()
+                                                                       : text.get();
+
     //char[] is String. Don't treat it like String[] !!
     @ParameterizedTest
-    @CsvSource({"the, it"})
-    void testFirstThreeCharsOfText(String v1, String v2) {
+    @DisplayName("Test 1st N{0,3} chars of String")
+    @CsvSource({"true, the", "false, it"})
+    void testFirstNCharsOfText(Boolean less, String e) {
 
-        assertEquals(v1, shortText.get().substring(0, 3).trim().toLowerCase());
-        assertEquals(v2, text.get().substring(0, 3).trim().toLowerCase());
-
-        assertEquals(v1.charAt(0), Character.toLowerCase(shortText.get().charAt(0)));
-        assertEquals(v2.charAt(0), Character.toLowerCase(text.get().charAt(0)));
-
-        System.out.println(text.get().toCharArray()[0]);
+        assertEquals(e, sentences.apply(less).substring(0, e.length()).trim().toLowerCase());
+        assertEquals(e.charAt(0), Character.toLowerCase(sentences.apply(less).charAt(0)));
+        assertEquals(e.charAt(0), Character.toLowerCase(sentences.apply(less).toCharArray()[0]));
 
 //        Stream.of(text.get().toCharArray()).findFirst().orElseThrow()[0] is meaningless!!!!!
 //        but, if you need ops. on every Character,
@@ -96,8 +98,8 @@ public class StringTest {
                 .collect(Collectors.joining("/")));
 
 //        text.get()
-//                .chars()   //IntStream -- same as codePoints()
-//                .forEach(System.out::println);
+//             .chars()   //IntStream -- same as codePoints()
+//             .forEach(System.out::println);
     }
 
     /* equality
@@ -122,20 +124,6 @@ public class StringTest {
     void compareToShortText(String v) {
         assertEquals(0, v.compareTo(shortText.get()));
     }
-
-    /* search
-     *
-     * String.startsWith("prefix"), true,false
-     * String.endsWith("suffix"), true, false
-     *
-     * String.indexOf(String str), indexFound or -1 if not occurs
-     *
-     * String.replace(CharSequence oldString, newString)
-     *
-     * String.substring(beginIndex, endIndex), returns a new string
-     *
-     * String join(CharSequence delimiter, CharSequence..elements), puts a delimiter between all elements
-     * */
 
     @ParameterizedTest
     @ValueSource(strings = {"The"})
@@ -164,15 +152,17 @@ public class StringTest {
         assert text.get().replaceAll("[f|F]ox", n).contains(n);
     }
 
+
+    //todo: Statistical String ops. frequency
     @ParameterizedTest
     @CsvSource({"true, [f|F]ox, 1", "false, [f|F]ox, 38"})
     void frequencyOfFoxInShortText(boolean isShort, String regex, int frequency) {
 
-        var k = isShort ? Pattern.compile(regex).matcher(shortText.get())
-                        : Pattern.compile(regex).matcher(text.get());
+        var matcher = isShort ? Pattern.compile(regex).matcher(shortText.get())
+                              : Pattern.compile(regex).matcher(text.get());
 
         int count = 0;
-        while (k.find()) count++;
+        while (matcher.find()) count++;
 
        assertEquals(frequency, count);
     }
