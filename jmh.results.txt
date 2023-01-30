@@ -33,3 +33,4 @@ StringConcatenationBenchmark.concatWithConcat         avgt    4     0.035 ±   0
 StringConcatenationBenchmark.concatWithJoin           avgt    4     0.103 ±   0.017   us/op
 StringConcatenationBenchmark.concatWithJoinStream     avgt    4     0.116 ±   0.027   us/op
 StringConcatenationBenchmark.concatWithPlusOperator   avgt    4     0.002 ±   0.001   us/op
+ll
