@@ -70,12 +70,6 @@ public class ArrayFrequencyBenchmark {
         bh.consume(count);
     }
 
-//1 beast de ide den kac dk da yapiyor.
-//  ide 16dk vs 16dk
-//  cli 8dk vs 8dk
-//2 monster daki koda main i ekle. calisiyor mu ide den bak :: netlesti
-//2 beast deki kodu guncelle. Run tekrar. sonuclara bak :: ?
-
     @Benchmark
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
     @Fork(2)
