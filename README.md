@@ -26,6 +26,9 @@ things to practise some java concepts
   - or, `./gradlew jar` to build jar and 
     run class from the jar like `java -cp /build/libs/.....jar com.Basics`
   - or, `java src/main/java/com/core/fp/TestStream4.java`
-- to run Java Micro benchmarks, use `./gradlew jmh` 
-  -    or install plugin for IDE.
-
+- to run Java Micro benchmarks, use 
+  - `./gradlew jmh` which runs all @Benchmarks annotated files
+  - or install JMH plugin for intelliJ. so function based run and main based run is possible
+  - or, Add main() function for jmh (where you gathered under jmh/src folder), 
+    - run `./gradlew jmhJar`
+    - and use ` java -cp build/libs/java-fundamentals-1.0-SNAPSHOT-jmh.jar core.ArrayFrequencyBenchmark`
