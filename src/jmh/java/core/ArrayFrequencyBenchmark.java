@@ -2,6 +2,8 @@ package core;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -10,6 +12,7 @@ import java.util.regex.Pattern;
 
 /**
  * used text field.
+ * countByRegex vs countByRegex2 same code
  */
 public class ArrayFrequencyBenchmark {
 
@@ -59,7 +62,9 @@ public class ArrayFrequencyBenchmark {
 //        bh.consume(count);
 //    }
 
-
+//1 beast de ide den kac dk da yapiyor. 12 dk vs ?
+//    2 monster daki koda main i ekle. calisiyor mu ide den bak
+//2 beast deki kodu guncelle.
 
     @Benchmark
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
@@ -80,4 +85,14 @@ public class ArrayFrequencyBenchmark {
 //    ArrayFrequencyBenchmark.countByRegex2       avgt   10   0.043 ± 0.003   ms/op
 //    ArrayFrequencyBenchmark.countBySequential   avgt   10   0.121 ± 0.001   ms/op
 //    ArrayFrequencyBenchmark.countByStream       avgt   10   0.154 ± 0.006   ms/op
+
+    public static void main(String[] args) throws Exception {
+//        org.openjdk.jmh.Main.main(args);
+        var opt = new OptionsBuilder()
+                .include(core.ArrayFrequencyBenchmark.class.getName())
+                .forks(1)
+                .build() ;
+
+        new Runner(opt).run() ;
+    }
 }

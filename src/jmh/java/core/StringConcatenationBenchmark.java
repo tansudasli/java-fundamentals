@@ -2,6 +2,8 @@ package core;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -98,5 +100,14 @@ public class StringConcatenationBenchmark {
         bh.consume(StringTest.concatWithJoinStream.get());
     }
 
+    public static void main(String[] args) throws Exception {
+//        org.openjdk.jmh.Main.main(args);
+        var opt = new OptionsBuilder()
+                .include(core.StringConcatenationBenchmark.class.getName())
+                .forks(1)
+                .build() ;
+
+        new Runner(opt).run() ;
+    }
 
 }
