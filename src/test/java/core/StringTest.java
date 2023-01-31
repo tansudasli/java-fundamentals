@@ -27,7 +27,7 @@ public class StringTest {
     /* no built-in string type in Java.
      * use String (sequences of Unicode characters
      * each quoted string is instance of String class
-     **/
+     */
 
     public static Supplier<String> text = () ->
     """
@@ -112,6 +112,11 @@ public class StringTest {
      *
      * */
 
+    @ParameterizedTest
+    @CsvSource({"true, 42", "false, 5567"})
+    void countOfChars(Boolean less, int count) {
+        assertEquals(count, sentences.apply(less).length());
+    }
 
     /* comparison
      *
@@ -128,7 +133,7 @@ public class StringTest {
     @ParameterizedTest
     @ValueSource(strings = {"The"})
     void isTextStartsWithThe(String v) {
-        assert shortText.get().startsWith(v);
+        assertTrue(shortText.get().startsWith(v));
         assertFalse(text.get().startsWith(v));
     }
 
@@ -136,20 +141,20 @@ public class StringTest {
     @ValueSource(strings = "fox")
     void isTextContainsFox(String v) {
 
-        assert shortText.get().indexOf(v) > 0;  //index found or -1
+        assertTrue(shortText.get().indexOf(v) > 0);  //index found or -1
 
-        assert Pattern.compile("[f|F]ox").matcher(shortText.get()).find();
-        assert Pattern.compile("[f|F]ox").matcher(text.get()).find();
+        assertTrue(Pattern.compile("[f|F]ox").matcher(shortText.get()).find());
+        assertTrue(Pattern.compile("[f|F]ox").matcher(text.get()).find());
     }
 
     @ParameterizedTest
     @CsvSource({"fox, ###"})
     void replaceFoxInText(String o, String n) {
         System.out.println(shortText.get().toLowerCase().replace(o, n));
-        System.out.println(text.get().replaceAll("[f|F]ox", n).substring(0, 50));
+        System.out.println(text.get().replaceAll("[f|F]ox", n).substring(0, 150));
 
-        assert shortText.get().toLowerCase().replace(o, n).contains(n);
-        assert text.get().replaceAll("[f|F]ox", n).contains(n);
+        assertTrue(shortText.get().toLowerCase().replace(o, n).contains(n));
+        assertTrue(text.get().replaceAll("[f|F]ox", n).contains(n));
     }
 
 
