@@ -27,6 +27,17 @@ public class ArrayStringTest {
     public static Function<Boolean, String[]> words = less -> less ? shortTextAsWords.get()
                                                                    : ArrayStringTest.textAsWords.get();
 
+    @ParameterizedTest
+    @DisplayName("Show String[] data")
+    @ValueSource(strings = {"true", "false"})
+    public void shoutAt(boolean less) {
+
+        System.out.println(
+                Arrays.stream(ArrayStringTest.words.apply(less))
+                        .limit(10)
+                        .collect(Collectors.joining(" "))
+                        .concat(" ..."));
+    }
 
     @ParameterizedTest
     @DisplayName("Test 1st word of String[]")
@@ -57,8 +68,6 @@ public class ArrayStringTest {
 
     }
 
-    //todo: make it more clean below via extract function refactoring technique
-
     //after java9, works better. use results as Stream!
     public static BiFunction<Boolean, String, Long> frequencyOfRegex =
             (less, regex) -> Pattern.compile(regex)
@@ -71,24 +80,6 @@ public class ArrayStringTest {
     @CsvSource({"true, [F|f]ox, 1", "false, [F|f]ox, 38"})
     public void frequencyOfFoxWithRegex(boolean less, String regex, long e) {
         assertEquals(e,  frequencyOfRegex.apply(less, regex));
-    }
-
-    @ParameterizedTest
-    @DisplayName("Show String[] data")
-    @ValueSource(strings = {"true", "false"})
-    public void shoutStrings(boolean less) {
-
-        System.out.println(
-                Arrays.stream(ArrayStringTest.words.apply(less))
-                        .limit(10)
-                        .collect(Collectors.joining(" ")));
-
-//        Arrays.stream(Variables.stringsDataGenerator())
-//                .forEach(s -> System.out.printf("%s ", s));
-
-//        for (String x : Variables.stringsDataGenerator())
-//            System.out.format("%s ", x) ;
-
     }
 
 

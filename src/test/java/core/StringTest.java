@@ -77,6 +77,13 @@ public class StringTest {
     public static Function<Boolean, String> sentences = (less) -> less ? shortText.get()
                                                                        : text.get();
 
+    @ParameterizedTest
+    @DisplayName("Show String data")
+    public void shoutAt(boolean less) {
+
+        System.out.println(sentences.apply(less));
+    }
+
     //char[] is String. Don't treat it like String[] !!
     @ParameterizedTest
     @DisplayName("Test 1st N{0,3} chars of String")
