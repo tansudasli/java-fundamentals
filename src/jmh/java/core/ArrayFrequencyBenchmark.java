@@ -67,7 +67,7 @@ public class ArrayFrequencyBenchmark {
         while (matcher.find())
             count++;
 
-        bh.consume(count);
+        bh.consume(count);  // better:: matcher.results().count
     }
 
     @Benchmark

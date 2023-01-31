@@ -6,11 +6,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -33,7 +31,7 @@ public class ArrayStringTest {
     @ParameterizedTest
     @DisplayName("Test 1st word of String[]")
     @CsvSource({"true, the", "false, it"})
-    void testFirstOfWords(Boolean less, String e) {
+    void testFirstElementOfWords(Boolean less, String e) {
         assertEquals(e, ArrayStringTest.words.apply(less)[0].toLowerCase().trim());
     }
 
@@ -57,29 +55,16 @@ public class ArrayStringTest {
     public void frequencyOfFox(boolean less, String target, long e) {
         assertEquals(e, ArrayStringTest.frequencyOf.apply(less, target));
 
-        var x = Arrays.stream(words.apply(true))
-                      .map(String::toLowerCase)
-                      .sorted(Comparator.naturalOrder());
-
-//        x.forEach(System.out::println);
-
-        System.out.println(Arrays.binarySearch(x.toArray(),"fox"));
-
     }
 
     //todo: make it more clean below via extract function refactoring technique
 
-    public static BiFunction<Boolean, String, Long> frequencyOfRegex = (less, regex) -> {
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(less ? Arrays.toString(shortTextAsWords.get())
-                                   : Arrays.toString(words.apply(less)));
-
-        long count = 0;
-        while (m.find())
-            count++;
-
-        return count;
-    };
+    //after java9, works better. use results as Stream!
+    public static BiFunction<Boolean, String, Long> frequencyOfRegex =
+            (less, regex) -> Pattern.compile(regex)
+                    .matcher(Arrays.toString(words.apply(less)))
+                    .results()
+                    .count();
 
     @ParameterizedTest
     @DisplayName("Test frequency of 'fox' in String[]")
