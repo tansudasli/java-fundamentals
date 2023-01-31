@@ -160,16 +160,18 @@ public class StringTest {
 
     //todo: Statistical String ops. frequency
     @ParameterizedTest
-    @CsvSource({"true, [f|F]ox, 1", "false, [f|F]ox, 38"})
+    @CsvSource({"true, fox, 1", "false, fox, 38"})
     void frequencyOfFoxWithRegex(boolean isShort, String regex, int frequency) {
 
-        var matcher = isShort ? Pattern.compile(regex).matcher(shortText.get())
-                              : Pattern.compile(regex).matcher(text.get());
+        Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
+                .matcher(sentences.apply(isShort))
+                .results()
+                .forEach(e -> System.out.println(e.group(0))); //.group holds matched value
 
-        int count = 0;
-        while (matcher.find()) count++;
-
-       assertEquals(frequency, count);
+       assertEquals(frequency, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
+               .matcher(sentences.apply(isShort))
+               .results()
+               .count());
     }
 
 
