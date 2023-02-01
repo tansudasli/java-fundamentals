@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
  * String.join wins the clarity.
  * Don't make it complex just for join!
  * <li>StringBuilder or StringBuffer in stream, outperforms in every case !
+ * <p><p>
+ *     streamWithStringBuilder performs better streamWithCollectorJoin, even-though both in streams.
+ *     streamWithStringBuilder performs better stringJoin, even-though it creates a stream.
  */
 @State(Scope.Benchmark)
 public class ArrayConcatenationBenchmark {
@@ -26,7 +29,7 @@ public class ArrayConcatenationBenchmark {
 //    @Param({"100", "1002", "2000"})
 //    private int capacity;
 
-    @Param({"1000", "100000", "1000000"})
+    @Param({"100", "1000", "100000", "1000000"})
     private int size;
 
     private static String[] dataGenerator;
@@ -40,7 +43,7 @@ public class ArrayConcatenationBenchmark {
         //generate a 1000, 100K, 1M array
         dataGenerator = Arrays.copyOf(baseData, size);
 
-        if (size != 1000)
+        if (size > 1000)
             Arrays.fill(dataGenerator, 1000, size-1, "bla");
 
     }
@@ -92,6 +95,7 @@ public class ArrayConcatenationBenchmark {
     //ArrayConcatenationBenchmark.stringWithJoin            avgt    6   0.037 ± 0.018   ms/op
 
 
+    //./gradlew clean build jmhJar
     // java -cp build/libs/java-fundamentals-1.0-SNAPSHOT-jmh.jar core.ArrayConcatenationBenchmark
     public static void main(String[] args) throws Exception {
 
