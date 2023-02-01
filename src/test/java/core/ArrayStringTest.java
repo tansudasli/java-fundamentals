@@ -48,7 +48,7 @@ public class ArrayStringTest {
 
     @ParameterizedTest
     @DisplayName("Test count of String[]")
-    @CsvSource({"true, 8", "false, 999"})
+    @CsvSource({"true, 8", "false, 1002"})
     public void countOfWords(boolean less, int length) {
         assertEquals(length, ArrayStringTest.words.apply(less).length);
     }
