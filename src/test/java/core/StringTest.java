@@ -65,22 +65,20 @@ public class StringTest {
     When living near the coast foxes will, however, visit the shore at low water in search of crabs and whelks; and the old story of the fox and the grapes seems to be founded upon a partiality on the part of the creature for that fruit.
     In a second phase of the species, the colour, which often displays a slaty hue (whence the name of blue fox), remains more or less the same throughout the year, the winter coat being, however, recognizable by the great length of the fur.
     It is the burial-place of Fox the martyrologist and Milton the poet, and contains some fine wood-carving by Grinling Gibbons.
-    Nor ought any critical admirer of Fox
-    """.replaceAll("\n", "");
+    Nor ought any critical admirer of Fox""";
 
 
     public static Supplier<String> shortText = () ->
     """
-    The fox was already in your chicken house.
-    """.replaceAll("\n", "");
+    The fox was already in your chicken house.""";
 
     public static Function<Boolean, String> sentences = (less) -> less ? shortText.get()
                                                                        : text.get();
 
     @ParameterizedTest
     @DisplayName("Show String data")
+    @CsvSource({"true", "false"})
     public void shoutAt(boolean less) {
-
         System.out.println(sentences.apply(less));
     }
 
@@ -120,9 +118,22 @@ public class StringTest {
      * */
 
     @ParameterizedTest
-    @CsvSource({"true, 42", "false, 5567"})
+    @CsvSource({"true, 35", "false, 4608"})
     void countOfChars(Boolean less, int count) {
-        assertEquals(count, sentences.apply(less).length());
+//        assertEquals(count, sentences.apply(less).length()); //counts spaces!
+        assertEquals(count, Pattern.compile("\\S")
+                                   .matcher(sentences.apply(less))
+                                   .results()
+                                   .count());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"true, 8", "false, 1002"})
+    void countOfWords(Boolean less, int count) {
+        assertEquals(count, Pattern.compile("\\w+")
+                                    .matcher(sentences.apply(less))
+                                    .results()
+                                    .count());
     }
 
     /* comparison
@@ -184,9 +195,7 @@ public class StringTest {
 
     public static Supplier<String> concatWithPlusOperator = () -> "The " + "fox " + "was " + "already " + "in " + "your " + "chicken " + "house.";
     public static Supplier<String> concatWithJoin = () -> String.join(" ", "The", "fox","was","already", "in", "your", "chicken", "house.");
-    public static Supplier<String> concatWithJoinStream = () -> Arrays.asList("The ", "fox ", "was ", "already ", "in ", "your ", "chicken ", "house.")
-            .stream()
-            .collect(Collectors.joining());
+
     public static Supplier<String> concatWithConcat = () -> "The ".concat("fox ").concat("was ").concat("already ").concat("in ").concat("your ").concat("chicken ").concat("house.");
     public static Supplier<String> concatWithBuilder = () -> new StringBuilder().append("The ").append("fox ").append("was ").append("already ").append("in ").append("your ").append("chicken ").append("house.").toString();
     public static Supplier<String> concatWithBuffer = () -> new StringBuffer().append("The ").append("fox ").append("was ").append("already ").append("in ").append("your ").append("chicken ").append("house.").toString();
@@ -198,7 +207,7 @@ public class StringTest {
         assertEquals(v, StringTest.concatWithPlusOperator.get());
         assertEquals(v, StringTest.concatWithConcat.get());
         assertEquals(v, StringTest.concatWithJoin.get());
-        assertEquals(v, StringTest.concatWithJoinStream.get());
+
         assertEquals(v, StringTest.concatWithBuilder.get());
         assertEquals(v, StringTest.concatWithBuffer.get());
     }
