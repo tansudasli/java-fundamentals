@@ -5,7 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
@@ -144,22 +143,22 @@ public class StringTest {
      * */
     @ParameterizedTest
     @ValueSource(strings = {"The fox was already in your chicken house."})
-    void compareToShortText(String v) {
-        assertEquals(0, v.compareTo(shortText.get()));
+    void compareToShortText(String e) {
+        assertEquals(0, e.compareTo(shortText.get()));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"The"})
-    void isTextStartsWithThe(String v) {
-        assertTrue(shortText.get().startsWith(v));
-        assertFalse(text.get().startsWith(v));
+    void isTextStartsWithThe(String e) {
+        assertTrue(shortText.get().startsWith(e));
+        assertFalse(text.get().startsWith(e));
     }
 
     @ParameterizedTest
     @ValueSource(strings = "fox")
-    void isTextContainsFox(String v) {
+    void isTextContainsFox(String e) {
 
-        assertTrue(shortText.get().indexOf(v) > 0);  //index found or -1
+        assertTrue(shortText.get().indexOf(e) > 0);  //index found or -1
 
         assertTrue(Pattern.compile("[f|F]ox").matcher(shortText.get()).find());
         assertTrue(Pattern.compile("[f|F]ox").matcher(text.get()).find());
@@ -196,20 +195,20 @@ public class StringTest {
     public static Supplier<String> concatWithPlusOperator = () -> "The " + "fox " + "was " + "already " + "in " + "your " + "chicken " + "house.";
     public static Supplier<String> concatWithJoin = () -> String.join(" ", "The", "fox","was","already", "in", "your", "chicken", "house.");
 
-    public static Supplier<String> concatWithConcat = () -> "The ".concat("fox ").concat("was ").concat("already ").concat("in ").concat("your ").concat("chicken ").concat("house.");
-    public static Supplier<String> concatWithBuilder = () -> new StringBuilder().append("The ").append("fox ").append("was ").append("already ").append("in ").append("your ").append("chicken ").append("house.").toString();
-    public static Supplier<String> concatWithBuffer = () -> new StringBuffer().append("The ").append("fox ").append("was ").append("already ").append("in ").append("your ").append("chicken ").append("house.").toString();
-
+    /**Concatenation
+     * <li>String.concat performs always worse!</li>
+     * <li>+ operator is ok less-than 1000, but prefer String.join !</li>
+     * <li>StringBuilder/Buffer is the best in every-case</li>
+     * <p>
+     * {@see core.ArrayConcatenationBenchmark.class detailed benchmarks}
+     * @param e expected
+     */
     @ParameterizedTest
     @ValueSource(strings = "The fox was already in your chicken house.")
-    void testConcatenations(String v) {
+    void testConcatenations(String e) {
 
-        assertEquals(v, StringTest.concatWithPlusOperator.get());
-        assertEquals(v, StringTest.concatWithConcat.get());
-        assertEquals(v, StringTest.concatWithJoin.get());
-
-        assertEquals(v, StringTest.concatWithBuilder.get());
-        assertEquals(v, StringTest.concatWithBuffer.get());
+        assertEquals(e, StringTest.concatWithPlusOperator.get());
+        assertEquals(e, StringTest.concatWithJoin.get());
     }
 
     /* formatting
