@@ -83,15 +83,14 @@ public class ArrayStringTest {
     }
 
 
-
-
-
     /*
      * for (variable : collection) statement
      *
      * Iterable interface has to be implemented, such as ArrayList
      *
-     * Arrays.copyOf(arrayX, 2 * arrayXLength);  So, old array values + added new elements to the new easily.
+     * Arrays.copyOf(arrayX, 2 * arrayXLength);  So, old array values + added new elements w/ null or empty values
+     * then, Array.fill() to inject meaningful values
+     *
      * Arrays.sort(), QuickSort.. it returns void!
      * Arrays.binarySearch(), BinarySearch algorithm, it returns a value!
      * Arrays.stream.sorted() is also possible!!

@@ -82,4 +82,47 @@ public class VariablesTest {
     }
 
 
+    /* Date
+     * Use LocalDate class. threadsafe, immutable, and no time values :)
+     * java.util.Date, GregorianCalendar class are deprecated or more complex operations!
+     *
+     * java.time.LocalDate x = LocalDate.now()
+     * x.getYear()
+     * y = x.plusDays(1000) , 1000 days later.
+     * y.getYear() --> new year you get
+     *
+     * LocalDate x = LocalDate.of(2002, 12, 5);
+     *
+     * parsing different formats
+     * LocalDate.parse("", DateTimeFormatter.fPattern("d-mm-yyyy")
+     * */
+
+    /* operators $ expressions
+     * ?:
+     *  b ? 1 : 0
+     *  zz < zzz ? 1 : 0
+     *
+     * switch
+     *
+     * for(:)
+     *
+     * instance of ..as???
+     *
+     *
+     * {{   object constructor
+     * The outer braces make an anonymous subclass of ArrayList
+     *
+     * If you don’t need the array list again, it would be nice to make it anonymous
+     * new ArrayList<String>() {{ add("Harry"); add("Tony"); }};
+
+     * instead of
+     *  ArrayList<String> friends = new ArrayList<>();
+     *  friends.add("Harry");
+     *  friends.add("Tony");
+     *
+     *
+     **/
+
+    //Todo: add new default contractors/initializers
+
 }
