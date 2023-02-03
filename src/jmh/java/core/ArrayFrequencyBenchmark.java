@@ -2,6 +2,7 @@ package core;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
+import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
@@ -9,6 +10,10 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static core.IVariable.words;
+import static core.IVariable.frequencyOf;
+import static core.IVariable.frequencyOfRegex;
 
 /**
  * used text field.
@@ -27,7 +32,7 @@ public class ArrayFrequencyBenchmark {
     public static void countByStream(Blackhole bh) {
         //gets words by regex from text
         //then, creates a stream
-        bh.consume(ArrayStringTest.frequencyOf.apply(false, "fox"));
+        bh.consume(frequencyOf.apply(false, "fox"));
     }
 
     @Benchmark
@@ -39,10 +44,10 @@ public class ArrayFrequencyBenchmark {
     public static void countBySequential(Blackhole bh) {
         //gets words by regex from text
         //then, loops
-        String[] words = ArrayStringTest.words.apply(false);
+        String[] w = words.apply(false);
 
         int count = 0;
-        for (String s : words)
+        for (String s : w)
             if (s.toLowerCase().contains("fox"))
                 count++;
 
@@ -58,10 +63,10 @@ public class ArrayFrequencyBenchmark {
     public static void countByRegex(Blackhole bh) {
         //gets words by regex from text
         //loops over regex
-        String[] words = ArrayStringTest.words.apply(false);
+        String[] w = words.apply(false);
 
         Pattern pattern = Pattern.compile("[f|F]ox");
-        Matcher matcher = pattern.matcher(Arrays.toString(words));
+        Matcher matcher = pattern.matcher(Arrays.toString(w));
 
         int count = 0;
         while (matcher.find())
@@ -78,7 +83,7 @@ public class ArrayFrequencyBenchmark {
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public static void countByRegex2(Blackhole bh) {
         //same as countByRegex, but defined as functional
-        bh.consume(ArrayStringTest.frequencyOfRegex.apply(false, "[f|F]ox"));
+        bh.consume(frequencyOfRegex.apply(false, "[f|F]ox"));
     }
 
 //    Benchmark                                   Mode  Cnt  Score   Error   Units
@@ -97,10 +102,11 @@ public class ArrayFrequencyBenchmark {
         var opt = new OptionsBuilder()
                 .include(core.ArrayFrequencyBenchmark.class.getName())
                 .jvmArgs("-Xms1g", "-Xmx1g", "-XX:+UseG1GC")
-                .warmupForks(1)
                 .warmupIterations(1)
                 .measurementIterations(2)
                 .forks(3)
+                .resultFormat(ResultFormatType.JSON)
+                .result("build/".concat(ArrayFrequencyBenchmark.class.getName()).concat(".json"))
                 .build() ;
 
         new Runner(opt).run() ;

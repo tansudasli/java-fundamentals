@@ -6,26 +6,17 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Uses text and shortText to get String[] as words,
- * So that we can do some Array ops. at ArrayStringTest.java and benchmarks at ArrayBenchmark.java
+ * So that we can do some Array ops. at java and benchmarks at ArrayBenchmark.java
  */
-public class ArrayStringTest {
+public class ArrayStringTest implements  IVariable {
 
 
-    //get String[] from text and shortText fields.
-    public static Supplier<String[]> textAsWords = () -> StringTest.text.get().split("\\W+");
-    public static Supplier<String[]> shortTextAsWords = () -> StringTest.shortText.get().split("\\W+");
-    public static Function<Boolean, String[]> words = less -> less ? shortTextAsWords.get()
-                                                                   : ArrayStringTest.textAsWords.get();
 
     @ParameterizedTest
     @DisplayName("Show String[] data")
@@ -33,7 +24,7 @@ public class ArrayStringTest {
     public void shoutAt(boolean less) {
 
         System.out.println(
-                Arrays.stream(ArrayStringTest.words.apply(less))
+                Arrays.stream(words.apply(less))
                         .limit(10)
                         .collect(Collectors.joining(" "))
                         .concat(" ..."));
@@ -43,37 +34,23 @@ public class ArrayStringTest {
     @DisplayName("Test 1st word of String[]")
     @CsvSource({"true, the", "false, it"})
     void testFirstElementOfWords(Boolean less, String e) {
-        assertEquals(e, ArrayStringTest.words.apply(less)[0].toLowerCase().trim());
+        assertEquals(e, words.apply(less)[0].toLowerCase().trim());
     }
 
     @ParameterizedTest
     @DisplayName("Test count of String[]")
     @CsvSource({"true, 8", "false, 1002"})
     public void countOfWords(boolean less, int length) {
-        assertEquals(length, ArrayStringTest.words.apply(less).length);
+        assertEquals(length, words.apply(less).length);
     }
-
-    public static BiFunction<Boolean, String, Long> frequencyOf =
-            (less, target) -> Arrays.stream(ArrayStringTest.words.apply(less))
-                    .map(String::toLowerCase)
-                    .map(String::trim)
-                    .filter(s -> s.contains(target.toLowerCase()))
-                    .count();
 
     @ParameterizedTest
     @DisplayName("Test frequency of 'fox' in String[]")
     @CsvSource({"true, fox, 1", "false, fox, 38"})
     public void frequencyOfFox(boolean less, String target, long e) {
-        assertEquals(e, ArrayStringTest.frequencyOf.apply(less, target));
+        assertEquals(e, frequencyOf.apply(less, target));
 
     }
-
-    //after java9, works better. use results as Stream!
-    public static BiFunction<Boolean, String, Long> frequencyOfRegex =
-            (less, regex) -> Pattern.compile(regex)
-                    .matcher(Arrays.toString(words.apply(less)))
-                    .results()
-                    .count();
 
     @ParameterizedTest
     @DisplayName("Test frequency of 'fox' in String[]")

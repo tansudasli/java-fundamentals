@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static core.IVariable.textAsWords;
+
 
 /**
  * to make a decision in this scenario, average time is more meaningful than throughput !!
@@ -35,7 +37,7 @@ public class ConcatenationBenchmark {
     public void init() {
 
         //use textAsWords as base array. no need in fact!
-        var baseData = ArrayStringTest.textAsWords.get();
+        var baseData = textAsWords.get();
 
         //generate few data: 100, 1000
         //more data: 100K, 1M array

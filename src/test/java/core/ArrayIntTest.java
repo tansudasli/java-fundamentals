@@ -6,20 +6,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
-import java.util.Random;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ArrayIntTest {
-
-    public static Function<Boolean, int[]> ints = less -> less ? new int[] {3, 5, 100, 102, 98, 77, 55, 67, 32, 23, 11, 1, 2, 4, 10, 72, 65, 77, 92, 6}
-                                                               : ArrayIntTest.intsDataGenerator.get();
-
-
-    public static Supplier<int[]> intsDataGenerator = () -> new Random().ints(1000, 100, 7500).toArray();
+public class ArrayIntTest implements IVariable {
 
 
     @ParameterizedTest
