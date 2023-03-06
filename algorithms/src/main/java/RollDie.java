@@ -34,9 +34,10 @@ public class RollDie {
     private static void roll2() {
         System.out.printf("%s%10s%n", "Face", "Frequency");
 
-        random.ints(count, 1, 7) //IntStream
-                .boxed() //Stream<Integer>  , mapToObj(Integer::valueOf) is old style
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) //Map<Integer, Long>
+//        new SecureRandom().ints() use instead of Math.random !!!
+        random.ints(count, 1, 7)
+                .boxed()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .forEach((face, frequency) -> System.out.printf("%4d%10d%n", face, frequency));
     }
 

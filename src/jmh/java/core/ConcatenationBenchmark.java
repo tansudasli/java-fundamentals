@@ -164,6 +164,7 @@ public class ConcatenationBenchmark {
         var opt = new OptionsBuilder()
                 .include(ConcatenationBenchmark.class.getName())
                 .jvmArgs("-Xms2g", "-Xmx2g", "-XX:+UseG1GC")
+                .threads(2)
                 .warmupIterations(1)
                 .measurementIterations(2)
                 .forks(3)

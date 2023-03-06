@@ -1,7 +1,11 @@
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -16,16 +20,16 @@ import java.util.stream.Collectors;
  */
 public class Concordances {
 
-    public static void main(String[] args) {
-        //System.out.println(Paths.get("out/production/java fundamentals/com/core/example/algorithms/concordances.txt").toAbsolutePath());
+    public static void main(String[] args) throws URISyntaxException {
+        String file = "/Users/tansudasli/coding/java-fundamentals/algorithms/src/main/resources/concordances.txt";
 
-        String path = "out/production/java fundamentals/com/core/example/algorithms/";
+//        URI path = Objects.requireNonNull(Concordances.class.getResource("concordances.txt").toURI());
 
         try {
             //count each occurrence
-            Map<String, Long> wordsCount = Files.lines(Paths.get(path + "concordances.txt"))
-                                                .flatMap(Pattern.compile("\\W+")::splitAsStream)
-                                                .collect(Collectors.groupingBy(String::toLowerCase, TreeMap::new, Collectors.counting()));
+                Map<String, Long> wordsCount = Files.lines(Path.of(file).toAbsolutePath())
+                        .flatMap(Pattern.compile("\\W+")::splitAsStream)
+                        .collect(Collectors.groupingBy(String::toLowerCase, TreeMap::new, Collectors.counting()));
 
             /* another split way
             Files.lines(Paths.get(path + "concordances.txt")).flatMap(line -> Stream.of(line.split("\\W+")))
