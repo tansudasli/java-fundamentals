@@ -65,11 +65,14 @@ public class MapX {
         Map<Character, Integer> occurrences = new HashMap<>();
         for (Character ch: line.toLowerCase(Locale.ROOT).toCharArray()) {
 
-            if (occurrences.containsKey(ch)) {
-                occurrences.put(ch, occurrences.get(ch) + 1);
-            } else {
-                occurrences.put(ch, 1);
-            }
+            var v = occurrences.containsKey(ch) ? occurrences.get(ch) + 1 : 1;
+            occurrences.put(ch, v);
+
+//            if (occurrences.containsKey(ch)) {
+//                occurrences.put(ch, occurrences.get(ch) + 1);
+//            } else {
+//                occurrences.put(ch, 1);
+//            }
         }
 
         System.out.println(occurrences);
