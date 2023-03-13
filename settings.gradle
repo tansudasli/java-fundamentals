@@ -1,6 +1,5 @@
 rootProject.name = 'java-fundamentals'
 include 'algorithms'
-include 'fp'
 include 'oop'
 include 'multithread'
 include 'reactive'
