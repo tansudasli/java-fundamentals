@@ -1,3 +1,5 @@
+package core.collections;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -14,7 +16,7 @@ class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "core.collections.Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
@@ -44,7 +46,7 @@ public class ListX {
      * get a stream list.stream(). then use functional staffs. instead of classical for loops, sorting
         searching etc..
      *
-     * to compare a Class (Student such as), you have to implement Comparable interface.
+     * to compare a Class (core.collections.Student such as), you have to implement Comparable interface.
        But if u use functional programming style you dont need. Just use Comparator functions
        whether ..stream().sorted(Comparable...) or ..sort(Comparator...)
      */
@@ -126,7 +128,7 @@ public class ListX {
         wordsA.sort(Comparator.comparingInt(String::length));
         System.out.println(wordsA);
 
-        //i did not implemented Comparator interface :) in Student class !! no need in functional programming
+        //i did not implemented Comparator interface :) in core.collections.Student class !! no need in functional programming
         students.sort(Comparator.comparing(student -> student.id));
         System.out.println(students);
 
@@ -136,7 +138,7 @@ public class ListX {
         words.stream().filter(word -> word.contains("Mali")).forEach(System.out::println);
         words.stream().sorted(Comparator.comparingInt(String::length)).forEach(System.out::println);
 
-        //i did not implemented Comparator interface :) in Student class !! no need in functional programming
+        //i did not implemented Comparator interface :) in core.collections.Student class !! no need in functional programming
         students.stream().sorted(Comparator.comparing(student -> student.id)).forEach(System.out::println);
 
 
